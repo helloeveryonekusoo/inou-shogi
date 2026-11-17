@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>異能将棋 試作版</title>
+<style>
+:root{
+  --bg:#f3eee4; --panel:#fffaf1; --ink:#2b2420; --sub:#7a6e62; --line:#d8ccb8;
+  --board:#e6c788; --grid:#7a5a2a; --piece:#f6e4b8; --piece2:#dfe7f3;
+  --hl:rgba(46,150,80,.50); --hl2:rgba(60,110,220,.50); --sel:rgba(220,80,50,.50);
+  --last:rgba(240,190,40,.45); --cand:#2e9650;
+  --sente:#b03a2e; --gote:#2e5a9e; --btn:#3d5a80; --btnink:#fff; --prom:#c0261a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1d1b19; --panel:#292622; --ink:#eee6da; --sub:#a99c8c; --line:#443e36;
+    --sente:#e2766a; --gote:#7aa2e0; --btn:#5a7fb0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1d1b19; --panel:#292622; --ink:#eee6da; --sub:#a99c8c; --line:#443e36;
+  --sente:#e2766a; --gote:#7aa2e0; --btn:#5a7fb0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;line-height:1.5}
+#app{max-width:560px;margin:0 auto;padding:12px 16px 40px}
+h1{font-size:20px;margin:4px 0 8px}
+h2{font-size:17px;margin:8px 0}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--btn);color:var(--btnink);border:0;border-radius:8px;padding:8px 12px;margin:3px 4px 3px 0}
+.btn.sub{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}
+.panel.active{outline:3px solid var(--cand)}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pname{font-weight:bold}
+.p0 .pname{color:var(--sente)} .p1 .pname{color:var(--gote)}
+.gauge{font-size:14px;color:var(--sub)}
+.gauge b{color:var(--ink);letter-spacing:2px}
+.hand{margin:6px 0 2px;min-height:32px}
+.hp{background:var(--piece);color:#2b2420;border:1px solid #b89a60;border-radius:6px;padding:3px 9px;margin:2px 4px 2px 0;font-size:16px}
+.hp.on{outline:3px solid var(--sel)}
+.hp small{font-size:11px;color:#a33}
+.cards{font-size:12px;color:var(--sub);margin-top:4px}
+.cards div{margin:1px 0}
+.cards b{color:var(--ink)}
+.cards .used{text-decoration:line-through;opacity:.6}
+.status{font-weight:bold;padding:8px 10px;border-radius:8px;background:var(--panel);border:1px solid var(--line);min-height:40px}
+.status.win{background:#fbe8c4;color:#5a3a00}
+.boardwrap{display:flex;justify-content:center;margin:6px 0}
+.board{display:grid;grid-template-columns:repeat(5,var(--cell)) 18px;grid-template-rows:18px repeat(5,var(--cell));--cell:min(16.5vw,74px)}
+.flab{grid-row:1;display:flex;align-items:end;justify-content:center;font-size:12px;color:var(--sub);height:18px}
+.board .hdr{height:18px}
+.rlab{display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--sub)}
+.cell{position:relative;background:var(--board);border:1px solid var(--grid);margin:0 -1px -1px 0;padding:0;display:flex;align-items:center;justify-content:center}
+.cell.last{box-shadow:inset 0 0 0 100px var(--last)}
+.cell.sel{box-shadow:inset 0 0 0 100px var(--sel)}
+.cell.hl::after,.cell.hl2::after{content:"";position:absolute;width:32%;height:32%;border-radius:50%;background:var(--hl)}
+.cell.hl2::after{background:var(--hl2);border-radius:4px}
+.cell.cand{box-shadow:inset 0 0 0 4px var(--cand)}
+.pc{position:relative;width:82%;height:88%;display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(50% 0,86% 16%,100% 100%,0 100%,14% 16%);background:var(--piece);color:#2b2420;
+  font-size:calc(var(--cell)*.46);font-weight:bold;padding-top:12%}
+.pc.o1{transform:rotate(180deg);background:var(--piece2)}
+.pc.prom{color:var(--prom)}
+.badge{position:absolute;font-size:10px;line-height:1;font-weight:bold;pointer-events:none}
+.badge.sk{top:3px;right:3px;color:#b8860b}
+.badge.seal{bottom:3px;left:3px;background:#555;color:#fff;border-radius:3px;padding:2px 3px}
+.controls{margin:6px 0}
+.log{font-size:13px;max-height:220px;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.log div{border-bottom:1px dotted var(--line);padding:2px 0}
+.log .sk{color:#9a6a00}
+.modalbg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+.modal{background:var(--panel);border-radius:12px;padding:16px;max-width:360px;width:100%}
+details{margin:8px 0;font-size:14px}
+summary{cursor:pointer;font-weight:bold}
+.deckrow{margin:8px 0}
+.deckrow .lbl{font-weight:bold;margin-bottom:2px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:3px 0}
+.opt.on{outline:3px solid var(--cand)}
+.opt .meta{font-size:12px;color:var(--sub)}
+.opt .txt{font-size:13px}
+.cost{font-weight:bold;font-size:16px;margin:8px 0}
+.cost.over{color:#c0261a}
+.note{font-size:13px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+// ================= 定義 =================
+const N=5;
+const PNAME={K:'玉',R:'飛',B:'角',G:'金',S:'銀',P:'歩'};
+const PROM={R:'竜',B:'馬',S:'全',P:'と'};
+const FILE=['５','４','３','２','１'];
+const RANK=['一','二','三','四','五'];
+const TYPES=['K','R','B','G','S','P'];
+const HANDT=['R','B','G','S','P'];
+const MARK=['▲','△'];
+const PLNAME=['先手','後手'];
+const COST_CAP=8;
+const MAX_PLY=100;
+
+const CARDS={
+ K:[{id:'none',name:'素の玉',cost:0,kind:'',text:'スキルなし。'},
+    {id:'fukutsu',name:'不屈の玉',cost:0,kind:'誘発',once:true,text:'自分の駒が合計3枚取られた時、持ち駒に歩を1枚もらう（1局1回）。'},
+    {id:'gourei',name:'号令の玉',cost:0,kind:'常時',text:'玉の周り8マスにいる自分の駒は、いつもの動きに加えて、周り8方向へ1マス動ける。'},
+    {id:'kisaku',name:'奇策の玉',cost:0,kind:'起動',once:true,text:'1局1回、手番を使って、自分の駒（玉以外）1枚を隣の空いたマスへ動かす。王手になる動かし方はできない。'}],
+ R:[{id:'none',name:'素の飛',cost:0,kind:'',text:'スキルなし。'},
+    {id:'tsuranuki',name:'貫きの飛',cost:2,kind:'常時',text:'縦横に動く時、自分の駒を1枚だけ飛び越えられる（竜も同じ）。'},
+    {id:'kakusei',name:'覚醒の飛',cost:2,kind:'成長',text:'自分が相手の駒を2枚以上取っていれば、この飛はどこで動いても成れる。'}],
+ B:[{id:'none',name:'素の角',cost:0,kind:'',text:'スキルなし。'},
+    {id:'tengan',name:'天眼の角',cost:2,kind:'誘発',text:'成った時、相手の持ち駒を1種類選ぶ。相手は次の2手番、その駒を打てない（王手されている時は打てる）。'},
+    {id:'teni',name:'転移の角',cost:3,kind:'起動',once:true,text:'1局1回、手番を使って、この角（馬）と自分の金か銀の位置を入れかえる。王手になる入れかえはできない。'}],
+ G:[{id:'none',name:'素の金',cost:0,kind:'',text:'スキルなし。'},
+    {id:'jouheki',name:'城壁の金',cost:2,kind:'反撃',text:'この金が取られた時、取った相手の駒を封印する（持ち主の次の手番が終わるまで動けない。利きは残る）。'},
+    {id:'kikan',name:'帰還の金',cost:2,kind:'守り',once:true,text:'この金が取られた時、相手の持ち駒にならず、自分の持ち駒に戻る（1局1回）。'}],
+ S:[{id:'none',name:'素の銀',cost:0,kind:'',text:'スキルなし。'},
+    {id:'shippu',name:'疾風の銀',cost:3,kind:'誘発',text:'この銀で駒を取ったあと、続けてもう1回動かせる（取らない動きだけ。成れず、王手にもできない）。取った手で王手をかけた時は使えない。'},
+    {id:'hayanari',name:'早成りの銀',cost:2,kind:'成長',text:'敵陣の1つ手前の段（奥から2段目）でも成れる。'}],
+ P:[{id:'none',name:'素の歩',cost:0,kind:'',text:'スキルなし。'},
+    {id:'sakigake',name:'先駆けの歩',cost:1,kind:'起動',once:true,text:'1局1回、歩を2マス前へ進める（間と移動先が空いている時）。成れず、王手にもできない。'},
+    {id:'koou',name:'呼応の歩',cost:2,kind:'連携',text:'持ち駒から歩を打った時、その歩の隣にいる自分の駒（玉以外）を、動ける方向へ1マス動かせる（取らない動きだけ。成れず、王手にもできない）。打った歩で王手をかけた時は使えない。'}],
+};
+function card(type,id){return CARDS[type].find(c=>c.id===id);}
+function deckCost(d){return HANDT.reduce((a,t)=>a+card(t,d[t]).cost,0);}
+
+// ================= 盤の基本 =================
+const ALL8=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+const GOLD=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,0]];
+const SILV=[[-1,-1],[-1,0],[-1,1],[1,-1],[1,1]];
+const ORTH=[[-1,0],[1,0],[0,-1],[0,1]];
+const DIAG=[[-1,-1],[-1,1],[1,-1],[1,1]];
+function inB(r,c){return r>=0&&r<N&&c>=0&&c<N;}
+function emptyHand(){return {R:0,B:0,G:0,S:0,P:0};}
+function cloneBoard(b){return b.map(row=>row.map(p=>p?{...p}:null));}
+function sq(r,c){return FILE[c]+RANK[r];}
+function dispName(pc){if(pc.p)return PROM[pc.t];if(pc.t==='K')return pc.o===0?'玉':'王';return PNAME[pc.t];}
+function kingPos(b,o){for(let r=0;r<N;r++)for(let c=0;c<N;c++){const p=b[r][c];if(p&&p.o===o&&p.t==='K')return [r,c];}return null;}
+function pieceDirs(pc){
+  const t=pc.t,p=pc.p;
+  if(t==='K')return {steps:ALL8,slides:[]};
+  if(t==='G'||(p&&(t==='S'||t==='P')))return {steps:GOLD,slides:[]};
+  if(t==='S')return {steps:SILV,slides:[]};
+  if(t==='P')return {steps:[[-1,0]],slides:[]};
+  if(t==='R')return {steps:p?DIAG:[],slides:ORTH};
+  return {steps:p?ORTH:[],slides:DIAG}; // B
+}
+// その駒が動ける（＝利きのある）マス。自分の駒のいるマスは含まない
+function targets(s,b,r,c){
+  const pc=b[r][c],o=pc.o,f=o===0?1:-1,res=[],seen=new Set();
+  const add=(rr,cc)=>{const k=rr*N+cc;if(!seen.has(k)){seen.add(k);res.push([rr,cc]);}};
+  const m=pieceDirs(pc);let steps=m.steps;
+  if(pc.t!=='K'&&s.decks[o].K==='gourei'){const kp=kingPos(b,o);if(kp&&Math.abs(kp[0]-r)<=1&&Math.abs(kp[1]-c)<=1)steps=steps.concat(ALL8);}
+  for(const [dr,dc] of steps){const rr=r+dr*f,cc=c+dc;if(!inB(rr,cc))continue;const q=b[rr][cc];if(q&&q.o===o)continue;add(rr,cc);}
+  const canJump=pc.t==='R'&&s.decks[o].R==='tsuranuki';
+  for(const [dr,dc] of m.slides){
+    let rr=r+dr*f,cc=c+dc,jumped=false;
+    while(inB(rr,cc)){
+      const q=b[rr][cc];
+      if(!q)add(rr,cc);
+      else if(q.o!==o){add(rr,cc);break;}
+      else{if(canJump&&!jumped)jumped=true;else break;}
+      rr+=dr*f;cc+=dc;
+    }
+  }
+  return res;
+}
+function attacked(s,b,r,c,by){
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++){const p=b[i][j];if(p&&p.o===by&&targets(s,b,i,j).some(([x,y])=>x===r&&y===c))return true;}
+  return false;
+}
+function inCheck(s,b,o){const k=kingPos(b,o);return k?attacked(s,b,k[0],k[1],1-o):true;}
+function nifu(b,o){for(let c=0;c<N;c++){let n=0;for(let r=0;r<N;r++){const p=b[r][c];if(p&&p.o===o&&p.t==='P'&&!p.p)n++;}if(n>1)return true;}return false;}
+function deadPawn(b,o){const r=o===0?0:N-1;for(let c=0;c<N;c++){const p=b[r][c];if(p&&p.o===o&&p.t==='P'&&!p.p)return true;}return false;}
+function safeFor(s,b,o){return !inCheck(s,b,o)&&!nifu(b,o)&&!deadPawn(b,o);}
+function isSealed(s,pc){return pc.sealUntil>=s.ply;}
+function inZone(o,r,depth){return o===0?r<depth:r>=N-depth;}
+function canPromote(s,pc,fr,tr){
+  if(pc.p||pc.t==='K'||pc.t==='G')return false;
+  if(pc.t==='R'&&s.decks[pc.o].R==='kakusei'&&s.took[pc.o]>=2)return true;
+  const depth=(pc.t==='S'&&s.decks[pc.o].S==='hayanari')?2:1;
+  return inZone(pc.o,fr,depth)||inZone(pc.o,tr,depth);
+}
+function mustPromote(pc,tr){return pc.t==='P'&&!pc.p&&tr===(pc.o===0?0:N-1);}
+
+// ================= 合法手 =================
+function legalActions(s,o,opt){
+  opt=opt||{};
+  const stage1=!!opt.stage1,guard=opt.guard||0,b=s.board,opp=1-o,chk=inCheck(s,b,o),acts=[];
+  const gives=nb=>inCheck(s,nb,opp);
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const pc=b[r][c];if(!pc||pc.o!==o)continue;
+    if(!chk&&isSealed(s,pc))continue;
+    for(const [tr,tc] of targets(s,b,r,c)){
+      const cap=b[tr][tc];if(stage1&&cap)continue;
+      const can=canPromote(s,pc,r,tr),must=mustPromote(pc,tr),opts=[];
+      if(!must)opts.push(false);if(can)opts.push(true);
+      for(const pr of opts){
+        const nb=cloneBoard(b),m=nb[r][c];nb[r][c]=null;if(pr)m.p=true;nb[tr][tc]=m;
+        if(!safeFor(s,nb,o))continue;const g=gives(nb);if(stage1&&g)continue;
+        acts.push({k:'move',from:[r,c],to:[tr,tc],promo:pr,cap:!!cap,check:g});
+      }
+    }
+    if(!stage1&&pc.t==='P'&&!pc.p&&s.decks[o].P==='sakigake'&&!s.used[o].sakigake){
+      const f=o===0?-1:1,r1=r+f,r2=r+2*f;
+      if(inB(r2,c)&&!b[r1][c]&&!b[r2][c]){
+        const nb=cloneBoard(b);nb[r2][c]=nb[r][c];nb[r][c]=null;
+        if(safeFor(s,nb,o)&&!gives(nb))acts.push({k:'dash',from:[r,c],to:[r2,c]});
+      }
+    }
+  }
+  const lk=s.lock[o];
+  for(const t of HANDT){
+    if(!s.hands[o][t])continue;
+    if(lk&&lk.t===t&&lk.until>=s.ply&&!chk)continue;
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+      if(b[r][c])continue;
+      const nb=cloneBoard(b);nb[r][c]={o,t,p:false,id:0,sealUntil:-1};
+      if(!safeFor(s,nb,o))continue;const g=gives(nb);if(stage1&&g)continue;
+      if(t==='P'&&g&&!guard){const s2={...s,board:nb,ply:s.ply+1};if(legalActions(s2,opp,{guard:1}).length===0)continue;} // 打ち歩詰め
+      acts.push({k:'drop',t,to:[r,c],check:g});
+    }
+  }
+  if(!stage1&&s.decks[o].K==='kisaku'&&!s.used[o].kisaku){
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+      const pc=b[r][c];if(!pc||pc.o!==o||pc.t==='K')continue;if(!chk&&isSealed(s,pc))continue;
+      for(const [dr,dc] of ALL8){const tr=r+dr,tc=c+dc;if(!inB(tr,tc)||b[tr][tc])continue;
+        const nb=cloneBoard(b);nb[tr][tc]=nb[r][c];nb[r][c]=null;
+        if(safeFor(s,nb,o)&&!gives(nb))acts.push({k:'kisaku',from:[r,c],to:[tr,tc]});}
+    }
+  }
+  if(!stage1&&s.decks[o].B==='teni'&&!s.used[o].teni){
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+      const bp=b[r][c];if(!bp||bp.o!==o||bp.t!=='B')continue;if(!chk&&isSealed(s,bp))continue;
+      for(let r2=0;r2<N;r2++)for(let c2=0;c2<N;c2++){
+        const q=b[r2][c2];if(!q||q.o!==o||(q.t!=='G'&&q.t!=='S'))continue;if(!chk&&isSealed(s,q))continue;
+        const nb=cloneBoard(b);const tmp=nb[r][c];nb[r][c]=nb[r2][c2];nb[r2][c2]=tmp;
+        if(safeFor(s,nb,o)&&!gives(nb))acts.push({k:'teni',from:[r,c],to:[r2,c2]});
+      }
+    }
+  }
+  return acts;
+}
+// 追加で1マス・1回動く系（疾風・呼応）の行き先。取らない・成らない・王手にしない
+function extraMoves(s,r,c,oneStep){
+  const b=s.board,pc=b[r][c],o=pc.o,res=[];
+  for(const [tr,tc] of targets(s,b,r,c)){
+    if(b[tr][tc])continue;
+    if(oneStep&&(Math.abs(tr-r)>1||Math.abs(tc-c)>1))continue;
+    const nb=cloneBoard(b);nb[tr][tc]=nb[r][c];nb[r][c]=null;
+    if(safeFor(s,nb,o)&&!inCheck(s,nb,1-o))res.push({from:[r,c],to:[tr,tc]});
+  }
+  return res;
+}
+function echoOptions(s,dr,dc){
+  const b=s.board,o=s.turn,res=[];
+  for(const [a,bb] of ALL8){const r=dr+a,c=dc+bb;if(!inB(r,c))continue;const pc=b[r][c];
+    if(!pc||pc.o!==o||pc.t==='K'||isSealed(s,pc))continue;res.push(...extraMoves(s,r,c,true));}
+  return res;
+}
+function handTypes(s,o){return HANDT.filter(t=>s.hands[o][t]>0);}
+
+// ================= 局面と進行 =================
+function newState(decks){
+  const b=Array.from({length:N},()=>Array(N).fill(null));let id=1;
+  const put=(r,c,o,t)=>{b[r][c]={o,t,p:false,id:id++,sealUntil:-1};};
+  put(0,0,1,'R');put(0,1,1,'B');put(0,2,1,'S');put(0,3,1,'G');put(0,4,1,'K');put(1,4,1,'P');
+  put(4,0,0,'K');put(4,1,0,'G');put(4,2,0,'S');put(4,3,0,'B');put(4,4,0,'R');put(3,0,0,'P');
+  const s={board:b,hands:[emptyHand(),emptyHand()],turn:0,ply:0,decks,used:[{},{}],lost:[0,0],took:[0,0],
+    gauge:[0,0],lock:[null,null],pending:[],phase:null,doubleStage:0,dirty:false,keys:[],checkFlags:[false],
+    log:[],result:null,last:null,nextId:id};
+  s.keys.push(posKey(s));
+  for(const o of [0,1])s.log.push({t:`${MARK[o]}${PLNAME[o]}のデッキ: `+TYPES.map(t=>card(t,decks[o][t]).name).join('・')});
+  return s;
+}
+function posKey(s){
+  let k='';for(const row of s.board)for(const p of row)k+=p?(p.o+p.t+(p.p?'+':'')):'..';
+  return k+'|'+HANDT.map(t=>s.hands[0][t]).join('')+'|'+HANDT.map(t=>s.hands[1][t]).join('')+'|'+s.turn;
+}
+function addLog(s,t,sk){s.log.push({t,sk:!!sk});}
+function capture(s,cap,capturer,o){
+  const v=cap.o;s.took[o]++;s.lost[v]++;
+  if(cap.t==='G'&&s.decks[v].G==='kikan'&&!s.used[v].kikan){
+    s.used[v].kikan=true;s.hands[v].G++;addLog(s,`【帰還の金】取られた金が${PLNAME[v]}の持ち駒に戻った`,1);
+  }else s.hands[o][cap.t]++;
+  if(cap.t==='G'&&s.decks[v].G==='jouheki'){
+    capturer.sealUntil=s.ply+2;addLog(s,`【城壁の金】取った${dispName(capturer)}を封印（${PLNAME[o]}の次の手番まで動けない）`,1);
+  }
+  if(s.decks[v].K==='fukutsu'&&!s.used[v].fukutsu&&s.lost[v]>=3){
+    s.used[v].fukutsu=true;s.hands[v].P++;addLog(s,`【不屈の玉】駒を3枚取られたので、${PLNAME[v]}は歩を1枚もらった`,1);
+  }
+}
+function combo(s,r,c,o){
+  if(s.doubleStage>0)return;
+  const b=s.board;let n=0;
+  for(const [dr,dc] of ORTH){const x=r+dr,y=c+dc,x2=r+2*dr,y2=c+2*dc;if(!inB(x2,y2))continue;
+    const m=b[x][y],e=b[x2][y2];if(m&&m.o!==o&&m.t!=='K'&&e&&e.o===o)n++;}
+  if(n){const before=s.gauge[o];s.gauge[o]=Math.min(3,before+n);addLog(s,`挟み！ 勢い+${n}（${s.gauge[o]}/3）`,1);}
+}
+function execute(s,a){
+  const o=s.turn,opp=1-o,b=s.board,m=MARK[o];s.dirty=true;s.pending=[];
+  if(a.k==='move'){
+    const [r,c]=a.from,[tr,tc]=a.to,pc=b[r][c],cap=b[tr][tc],nm=dispName(pc);
+    b[r][c]=null;if(a.promo)pc.p=true;b[tr][tc]=pc;
+    const canP=!a.promo&&canPromote(s,{...pc,p:false},r,tr)&&!pc.p;
+    addLog(s,`${m}${sq(tr,tc)}${nm}${a.promo?'成':(canP?'不成':'')}${cap?`（${PNAME[cap.t]}を取る）`:''}`);
+    if(cap)capture(s,cap,pc,o);
+    if(a.promo&&pc.t==='B'&&s.decks[o].B==='tengan'&&handTypes(s,opp).length)s.pending.push({name:'tengan'});
+    combo(s,tr,tc,o);
+    if(cap&&pc.t==='S'&&s.decks[o].S==='shippu'&&!inCheck(s,b,opp))s.pending.push({name:'bonus',sq:[tr,tc]});
+    s.last=[tr,tc];
+  }else if(a.k==='drop'){
+    const [tr,tc]=a.to;s.hands[o][a.t]--;b[tr][tc]={o,t:a.t,p:false,id:s.nextId++,sealUntil:-1};
+    addLog(s,`${m}${sq(tr,tc)}${PNAME[a.t]}打`);
+    combo(s,tr,tc,o);
+    if(a.t==='P'&&s.decks[o].P==='koou'&&!inCheck(s,b,opp))s.pending.push({name:'echo',sq:[tr,tc]});
+    s.last=[tr,tc];
+  }else if(a.k==='dash'||a.k==='kisaku'){
+    const [r,c]=a.from,[tr,tc]=a.to,pc=b[r][c];b[r][c]=null;b[tr][tc]=pc;
+    if(a.k==='dash'){s.used[o].sakigake=true;addLog(s,`${m}${sq(tr,tc)}${dispName(pc)}【先駆けの歩】2マス前進`,1);}
+    else{s.used[o].kisaku=true;addLog(s,`${m}${sq(tr,tc)}${dispName(pc)}【奇策の玉】隣のマスへ移動`,1);}
+    s.last=[tr,tc];
+  }else if(a.k==='teni'){
+    const [r,c]=a.from,[r2,c2]=a.to,p1=b[r][c],p2=b[r2][c2];b[r][c]=p2;b[r2][c2]=p1;s.used[o].teni=true;
+    addLog(s,`${m}【転移の角】${sq(r,c)}${dispName(p1)}と${sq(r2,c2)}${dispName(p2)}を入れかえ`,1);
+    s.last=[r2,c2];
+  }
+  advance(s);
+}
+function advance(s){
+  while(s.pending.length){
+    const p=s.pending[0];
+    if(p.name==='bonus'){p.opts=extraMoves(s,p.sq[0],p.sq[1],false);}
+    else if(p.name==='echo'){p.opts=echoOptions(s,p.sq[0],p.sq[1]);}
+    else if(p.name==='tengan'){p.opts=handTypes(s,1-s.turn);}
+    if(!p.opts.length){s.pending.shift();continue;}
+    s.phase=p;return;
+  }
+  s.phase=null;
+  if(s.doubleStage===1){s.doubleStage=2;addLog(s,'連続指しの2手目',1);return;}
+  endTurn(s);
+}
+function resolveExtra(s,opt,label){
+  const [r,c]=opt.from,[tr,tc]=opt.to,b=s.board,pc=b[r][c];b[r][c]=null;b[tr][tc]=pc;
+  addLog(s,`${MARK[s.turn]}${sq(tr,tc)}${dispName(pc)}【${label}】追加で移動`,1);s.last=[tr,tc];
+  s.pending.shift();s.phase=null;advance(s);
+}
+function skipPhase(s){s.pending.shift();s.phase=null;advance(s);}
+function chooseTengan(s,t){
+  const opp=1-s.turn;s.lock[opp]={t,until:s.ply+3};
+  addLog(s,`【天眼の角】${PLNAME[opp]}は次の2手番、${PNAME[t]}を打てない`,1);
+  s.pending.shift();s.phase=null;advance(s);
+}
+function startDouble(s){s.dirty=true;s.gauge[s.turn]=0;s.doubleStage=1;addLog(s,`${MARK[s.turn]}連続指し！（勢いを3使用）`,1);}
+function endTurn(s){
+  s.ply++;s.turn=1-s.turn;s.doubleStage=0;s.dirty=false;s.phase=null;
+  for(const o of [0,1])if(s.lock[o]&&s.lock[o].until<s.ply)s.lock[o]=null;
+  const key=posKey(s);s.keys.push(key);const chk=inCheck(s,s.board,s.turn);s.checkFlags.push(chk);
+  if(chk)addLog(s,'王手');
+  const acts=legalActions(s,s.turn);
+  if(!acts.length){s.result={winner:1-s.turn,reason:chk?'詰み':'指せる手がない'};return;}
+  const idx=[];s.keys.forEach((k,i)=>{if(k===key)idx.push(i);});
+  if(idx.length>=4){
+    const i0=idx[0],cur=s.keys.length-1;
+    for(const X of [0,1]){
+      const mv=[];for(let j=i0;j<cur;j++)if(j%2===X)mv.push(j);
+      if(mv.length&&mv.every(j=>s.checkFlags[j+1])){s.result={winner:1-X,reason:'連続王手の千日手'};return;}
+    }
+    s.result={winner:-1,reason:'千日手'};return;
+  }
+  if(s.ply>=MAX_PLY)s.result={winner:-1,reason:`${MAX_PLY}手に達した`};
+}
+
+// ================= 画面 =================
+let screen='deck',S=null,undoStack=[],deckStep=0,decks=[null,null],draft=null;
+let ui={sel:null,selHand:null,mode:null,teniFrom:null,promo:null};
+function resetUI(){ui={sel:null,selHand:null,mode:null,teniFrom:null,promo:null};}
+function snap(){return JSON.stringify(S);}
+const app=document.getElementById('app');
+function esc(t){return String(t).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));}
+function blankDeck(){const d={};for(const t of TYPES)d[t]='none';return d;}
+function randomDeck(){
+  for(;;){const d={};for(const t of TYPES){const cs=CARDS[t];d[t]=cs[Math.floor(Math.random()*cs.length)].id;}
+    if(deckCost(d)<=COST_CAP)return d;}
+}
+
+function render(){screen==='deck'?renderDeck():renderGame();}
+
+function renderDeck(){
+  if(!draft)draft=blankDeck();
+  const cost=deckCost(draft),o=deckStep;
+  let h=`<h1>異能将棋 試作版</h1><h2 style="color:var(${o?'--gote':'--sente'})">${MARK[o]}${PLNAME[o]}のデッキを選ぶ</h2>
+  <p class="note">${PLNAME[1-o]}の人は画面を見ないでください。各駒に1枚ずつ選びます。玉以外のコスト合計は${COST_CAP}以下。</p>`;
+  for(const t of TYPES){
+    h+=`<div class="deckrow"><div class="lbl">${PNAME[t]}</div>`;
+    for(const c of CARDS[t]){
+      h+=`<button class="opt${draft[t]===c.id?' on':''}" data-deck="${t}:${c.id}"><b>${c.name}</b>
+      <span class="meta">${t==='K'?'リーダー':'コスト'+c.cost}${c.kind?'・'+c.kind:''}</span><div class="txt">${c.text}</div></button>`;
+    }
+    h+='</div>';
+  }
+  h+=`<div class="cost${cost>COST_CAP?' over':''}">コスト合計 ${cost} / ${COST_CAP}</div>
+  <button class="btn sub" data-act="rand">おまかせ</button>
+  <button class="btn" data-act="deckok" ${cost>COST_CAP?'disabled':''}>決定</button>`;
+  app.innerHTML=h;
+}
+
+function phaseOpts(){return S.phase?S.phase.opts:[];}
+function currentActs(){
+  if(S.result||S.phase)return [];
+  return legalActions(S,S.turn,{stage1:S.doubleStage===1});
+}
+
+function renderGame(){
+  const acts=currentActs(),o=S.turn;
+  if(!S.result&&!S.phase&&S.doubleStage===2&&!acts.length){endTurn(S);pushTurn();return renderGame();}
+  // ハイライト
+  const hl=new Set(),hl2=new Set(),cand=new Set();const key=(r,c)=>r*N+c;
+  let selSq=ui.sel;
+  if(S.phase&&S.phase.name==='bonus'){selSq=S.phase.sq;for(const x of S.phase.opts)hl2.add(key(...x.to));}
+  else if(S.phase&&S.phase.name==='echo'){
+    if(ui.sel){for(const x of S.phase.opts)if(x.from[0]===ui.sel[0]&&x.from[1]===ui.sel[1])hl2.add(key(...x.to));}
+    for(const x of S.phase.opts)cand.add(key(...x.from));
+  }else if(ui.mode==='kisaku'){
+    const ks=acts.filter(a=>a.k==='kisaku');
+    if(ui.sel)ks.filter(a=>a.from[0]===ui.sel[0]&&a.from[1]===ui.sel[1]).forEach(a=>hl2.add(key(...a.to)));
+    ks.forEach(a=>cand.add(key(...a.from)));
+  }else if(ui.mode==='teni'){
+    const ts=acts.filter(a=>a.k==='teni');
+    if(ui.teniFrom){selSq=ui.teniFrom;ts.filter(a=>a.from[0]===ui.teniFrom[0]&&a.from[1]===ui.teniFrom[1]).forEach(a=>cand.add(key(...a.to)));}
+    else ts.forEach(a=>cand.add(key(...a.from)));
+  }else if(ui.selHand){
+    acts.filter(a=>a.k==='drop'&&a.t===ui.selHand).forEach(a=>hl.add(key(...a.to)));
+  }else if(ui.sel){
+    acts.filter(a=>(a.k==='move'||a.k==='dash')&&a.from[0]===ui.sel[0]&&a.from[1]===ui.sel[1])
+      .forEach(a=>(a.k==='dash'?hl2:hl).add(key(...a.to)));
+  }
+  // 状態表示
+  let st='',stCls='status';
+  if(S.result){stCls+=' win';st=S.result.winner<0?`引き分け（${S.result.reason}）`:`${MARK[S.result.winner]}${PLNAME[S.result.winner]}の勝ち（${S.result.reason}）`;}
+  else if(S.phase&&S.phase.name==='bonus')st='【疾風の銀】銀をもう1回動かせます（青い四角のマス）。動かさない時は「スキップ」。';
+  else if(S.phase&&S.phase.name==='echo')st='【呼応の歩】緑の枠の駒を選んで、1マス動かせます。動かさない時は「スキップ」。';
+  else if(S.phase&&S.phase.name==='tengan')st='【天眼の角】相手が打てなくなる駒を選んでください。';
+  else{
+    st=`${MARK[o]}${PLNAME[o]}の番です（${S.ply+1}手目）`;
+    if(inCheck(S,S.board,o))st+='　王手されています！';
+    if(S.doubleStage===1)st+='　連続指し1手目：駒を取らず、王手にもならない手を指してください。';
+    if(S.doubleStage===2)st+='　連続指し2手目：普通に指せます。';
+    if(ui.mode==='kisaku')st+='　【奇策の玉】緑の枠の駒を選び、青い四角のマスへ。';
+    if(ui.mode==='teni')st+=ui.teniFrom?'　【転移の角】入れかえる金か銀を選んでください。':'　【転移の角】角（馬）を選んでください。';
+  }
+  let h=`<h1>異能将棋 試作版</h1>`;
+  h+=playerPanel(1);
+  h+=`<div class="${stCls}">${st}</div>`;
+  h+=`<div class="boardwrap"><div class="board">`;
+  for(let c=0;c<N;c++)h+=`<div class="flab">${5-c}</div>`;h+=`<div class="hdr"></div>`;
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const k=key(r,c),pc=S.board[r][c];let cls='cell';
+      if(selSq&&selSq[0]===r&&selSq[1]===c)cls+=' sel';else if(S.last&&S.last[0]===r&&S.last[1]===c)cls+=' last';
+      if(hl.has(k))cls+=' hl';if(hl2.has(k))cls+=' hl2';if(cand.has(k))cls+=' cand';
+      let inner='';
+      if(pc){
+        const sk=S.decks[pc.o][pc.t]!=='none';
+        inner=`<div class="pc o${pc.o}${pc.p?' prom':''}">${dispName(pc)}</div>${sk?'<span class="badge sk">★</span>':''}${isSealed(S,pc)?'<span class="badge seal">封</span>':''}`;
+      }
+      h+=`<button class="${cls}" data-r="${r}" data-c="${c}" aria-label="${sq(r,c)}${pc?(pc.o?'後手':'先手')+dispName(pc):''}">${inner}</button>`;
+    }
+    h+=`<div class="rlab">${RANK[r]}</div>`;
+  }
+  h+=`</div></div>`;
+  h+=playerPanel(0);
+  // 操作
+  h+=`<div class="controls">`;
+  if(!S.result){
+    if(S.phase&&(S.phase.name==='bonus'||S.phase.name==='echo'))h+=`<button class="btn" data-act="skip">スキップ</button>`;
+    if(!S.phase){
+      if(!S.dirty&&S.doubleStage===0&&S.gauge[o]>=3&&legalActions(S,o,{stage1:true}).length)h+=`<button class="btn" data-act="double">連続指し（勢い3）</button>`;
+      if(acts.some(a=>a.k==='kisaku'))h+=`<button class="btn${ui.mode==='kisaku'?'':' sub'}" data-act="kisaku">奇策の玉を使う</button>`;
+      if(acts.some(a=>a.k==='teni'))h+=`<button class="btn${ui.mode==='teni'?'':' sub'}" data-act="teni">転移の角を使う</button>`;
+    }
+  }
+  h+=`<button class="btn sub" data-act="undo" ${(undoStack.length>1||S.dirty)?'':'disabled'}>1手戻す</button>`;
+  h+=`<button class="btn sub" data-act="new">新しい対局</button></div>`;
+  h+=`<details><summary>ルールのまとめ</summary>
+  <ul>
+  <li>普通の5五将棋と同じように指して、相手の玉を詰ませたら勝ち。</li>
+  <li>★の付いた駒はスキルを持っている。駒の能力は、今その駒を持っている人のデッキで決まる。</li>
+  <li><b>挟み</b>：動かした（打った）駒と自分の別の駒で、相手の駒（玉以外）を縦か横に挟むと勢い+1。勢いが3たまると<b>連続指し</b>（2手続けて指せる。1手目は取らず王手もしない手）。</li>
+  <li><b>封</b>の付いた駒は封印中で動かせない（利きは残る）。王手されている時は動かせる。</li>
+  <li>スキルによる移動では、王手をかけられず、成れない。</li>
+  <li>千日手は引き分け（王手をかけ続けた側は負け）。${MAX_PLY}手で引き分け。</li>
+  </ul></details>`;
+  h+=`<div class="log">${S.log.slice().reverse().map(l=>`<div class="${l.sk?'sk':''}">${esc(l.t)}</div>`).join('')}</div>`;
+  // モーダル
+  if(ui.promo){
+    h+=`<div class="modalbg"><div class="modal"><h2>成りますか？</h2>
+    <button class="btn" data-act="promoY">成る</button><button class="btn sub" data-act="promoN">成らない</button>
+    <button class="btn sub" data-act="promoC">やめる</button></div></div>`;
+  }
+  if(!S.result&&S.phase&&S.phase.name==='tengan'){
+    h+=`<div class="modalbg"><div class="modal"><h2>【天眼の角】</h2><p>${PLNAME[1-o]}が次の2手番打てなくなる駒を選んでください。</p>
+    ${S.phase.opts.map(t=>`<button class="btn" data-tengan="${t}">${PNAME[t]}</button>`).join('')}</div></div>`;
+  }
+  app.innerHTML=h;
+}
+
+function playerPanel(o){
+  const active=!S.result&&S.turn===o;
+  let h=`<div class="panel p${o}${active?' active':''}"><div class="phead"><span class="pname">${MARK[o]}${PLNAME[o]}${active?'（手番）':''}</span>
+  <span class="gauge">勢い <b>${'●'.repeat(S.gauge[o])}${'○'.repeat(3-S.gauge[o])}</b></span></div><div class="hand">`;
+  const ht=handTypes(S,o);
+  if(!ht.length)h+=`<span class="note">持ち駒なし</span>`;
+  const lk=S.lock[o],lockOn=lk&&lk.until>=S.ply;
+  for(const t of ht){
+    const locked=lockOn&&lk.t===t;
+    h+=`<button class="hp${ui.selHand===t&&active?' on':''}" data-hand="${o}:${t}">${PNAME[t]}${S.hands[o][t]>1?'×'+S.hands[o][t]:''}${locked?' <small>打てない</small>':''}</button>`;
+  }
+  h+=`</div><div class="cards">`;
+  for(const t of TYPES){
+    const c=card(t,S.decks[o][t]);if(c.id==='none')continue;
+    const used=c.once&&S.used[o][c.id];
+    h+=`<div class="${used?'used':''}"><b>${c.name}</b>（${c.kind}）${used?'使用済み':''}：${c.text}</div>`;
+  }
+  if(TYPES.every(t=>S.decks[o][t]==='none'))h+=`<div>スキルなし</div>`;
+  h+=`</div></div>`;
+  return h;
+}
+
+function pushTurn(){undoStack.push(snap());}
+function doAct(a){execute(S,a);if(!S.dirty)pushTurn();resetUI();render();}
+function sameSq(a,b){return a&&b&&a[0]===b[0]&&a[1]===b[1];}
+
+function onCell(r,c){
+  if(S.result||ui.promo)return;
+  const o=S.turn,pc=S.board[r][c];
+  if(S.phase){
+    const p=S.phase;
+    if(p.name==='bonus'){const x=p.opts.find(x=>sameSq(x.to,[r,c]));if(x){resolveExtra(S,x,'疾風の銀');afterPhase();}return;}
+    if(p.name==='echo'){
+      if(ui.sel){const x=p.opts.find(x=>sameSq(x.from,ui.sel)&&sameSq(x.to,[r,c]));if(x){resolveExtra(S,x,'呼応の歩');afterPhase();return;}}
+      ui.sel=p.opts.some(x=>sameSq(x.from,[r,c]))?[r,c]:null;render();return;
+    }
+    return;
+  }
+  const acts=currentActs();
+  if(ui.mode==='kisaku'){
+    if(ui.sel){const a=acts.find(a=>a.k==='kisaku'&&sameSq(a.from,ui.sel)&&sameSq(a.to,[r,c]));if(a)return doAct(a);}
+    ui.sel=acts.some(a=>a.k==='kisaku'&&sameSq(a.from,[r,c]))?[r,c]:null;render();return;
+  }
+  if(ui.mode==='teni'){
+    if(ui.teniFrom){const a=acts.find(a=>a.k==='teni'&&sameSq(a.from,ui.teniFrom)&&sameSq(a.to,[r,c]));if(a)return doAct(a);}
+    ui.teniFrom=acts.some(a=>a.k==='teni'&&sameSq(a.from,[r,c]))?[r,c]:null;render();return;
+  }
+  if(ui.selHand){
+    const a=acts.find(a=>a.k==='drop'&&a.t===ui.selHand&&sameSq(a.to,[r,c]));if(a)return doAct(a);
+  }
+  if(ui.sel){
+    const cs=acts.filter(a=>(a.k==='move'||a.k==='dash')&&sameSq(a.from,ui.sel)&&sameSq(a.to,[r,c]));
+    if(cs.length===1)return doAct(cs[0]);
+    if(cs.length>1){ui.promo=cs;render();return;}
+  }
+  ui.selHand=null;
+  ui.sel=(pc&&pc.o===o&&!sameSq(ui.sel,[r,c]))?[r,c]:null;
+  render();
+}
+function afterPhase(){if(!S.dirty)pushTurn();resetUI();render();}
+
+app.addEventListener('click',e=>{
+  const el=e.target.closest('button');if(!el)return;
+  if(el.dataset.deck){const [t,id]=el.dataset.deck.split(':');draft[t]=id;return render();}
+  if(el.dataset.r!==undefined)return onCell(+el.dataset.r,+el.dataset.c);
+  if(el.dataset.hand){
+    const [o,t]=el.dataset.hand.split(':');if(S.result||S.phase||+o!==S.turn||ui.mode)return;
+    ui.sel=null;ui.selHand=ui.selHand===t?null:t;return render();
+  }
+  if(el.dataset.tengan){chooseTengan(S,el.dataset.tengan);return afterPhase();}
+  const act=el.dataset.act;
+  if(act==='rand'){draft=randomDeck();return render();}
+  if(act==='deckok'){
+    decks[deckStep]=draft;draft=null;
+    if(deckStep===0){deckStep=1;window.scrollTo(0,0);return render();}
+    S=newState(decks);undoStack=[snap()];screen='game';resetUI();window.scrollTo(0,0);return render();
+  }
+  if(act==='promoY'||act==='promoN'){const a=ui.promo.find(a=>a.promo===(act==='promoY'));return doAct(a);}
+  if(act==='promoC'){ui.promo=null;return render();}
+  if(act==='skip'){skipPhase(S);return afterPhase();}
+  if(act==='double'){startDouble(S);resetUI();return render();}
+  if(act==='kisaku'||act==='teni'){const m=ui.mode===act?null:act;resetUI();ui.mode=m;return render();}
+  if(act==='undo'){
+    if(S.dirty){S=JSON.parse(undoStack[undoStack.length-1]);}
+    else if(undoStack.length>1){undoStack.pop();S=JSON.parse(undoStack[undoStack.length-1]);}
+    resetUI();return render();
+  }
+  if(act==='new'){if(!confirm('今の対局をやめて、デッキ選びからやり直しますか？'))return;
+    screen='deck';deckStep=0;decks=[null,null];draft=null;S=null;undoStack=[];return render();}
+});
+// テスト用に外から触れるようにしておく
+window.Ino={newState,legalActions,execute,inCheck,get S(){return S;},set S(v){S=v;},render,CARDS,endTurn,advance,resolveExtra,skipPhase,chooseTengan,startDouble,blankDeck};
+render();
+</script>
+</body>
+</html>
