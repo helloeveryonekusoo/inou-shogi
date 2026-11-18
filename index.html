@@ -2,11 +2,25 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>異能将棋 試作版</title>
-<meta http-equiv="refresh" content="0; url=%E7%95%B0%E8%83%BD%E5%B0%86%E6%A3%8B.html">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>異能将棋</title>
+<style>
+:root { --bg: #eef0f4; --surface: #fff; --line: #d6d9e3; --ink: #191b26; --muted: #5b6074; --accent: #1d6a86; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #111319; --surface: #1b1e28; --line: #2d3141; --ink: #e8eaf2; --muted: #9ea3b8; --accent: #5bb8d6; color-scheme: dark; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; }
+main { max-width: 640px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-left, 0px)) 40px max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 14px; }
+h1 { margin: 0 0 4px; font-size: 26px; }
+a.card { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+a.card.main { border: 2px solid var(--accent); }
+a.card b { font-size: 18px; color: var(--accent); }
+a.card span { display: block; color: var(--muted); font-size: 14px; margin-top: 4px; }
+</style>
 </head>
 <body>
-<p><a href="%E7%95%B0%E8%83%BD%E5%B0%86%E6%A3%8B.html">異能将棋 試作版を開く</a></p>
+<main>
+  <h1>異能将棋</h1>
+  <a class="card main" href="inou-hp.html"><b>異能将棋 体力制（新）</b><span>5×6盤。駒に能力と体力があり、体力を削り合う。6つのリーダーのデッキから選び、コンピュータか2人で対戦。</span></a>
+  <a class="card" href="%E7%95%B0%E8%83%BD%E5%B0%86%E6%A3%8B.html"><b>異能将棋 試作版（v0.2）</b><span>5×5盤。駒にスキルを持たせ、詰みだけで勝負する最初の試作。2人で対戦。</span></a>
+</main>
 </body>
 </html>
