@@ -289,7 +289,7 @@ header.bar h1 small { font: 500 12px var(--f-body); color: var(--muted); margin-
 </head>
 <body>
 <div id="app"></div>
-<script>
+<script id="engine">
 const DATA = [{"key": "kusabi", "name": "楔", "attr": "日", "leader": "楔1", "cards": {"楔-飛1": {"name": "ヘヴンズ・ラウド", "rar": "S", "trig": "成った時", "eff": "盤に自分の楔が1本以上あれば、盤上の自分の日の駒1枚につき、相手の最大体力の3%の特殊ダメージ（最大13%）", "piece": "飛"}, "楔-角1": {"name": "フラッシュ・ピアサー", "rar": "A", "trig": "取った時", "eff": "楔を1本置き、盤上の自分の楔1本につき200の特殊ダメージ（最大1200）", "piece": "角"}, "楔-金1": {"name": "ウェッジ・ガーディアン", "rar": "A", "trig": "取った時", "eff": "自分の楔が1本以上あれば、追撃500、回復500", "piece": "金"}, "楔-金2": {"name": "トレスパス・ペナルティ", "rar": "A", "trig": "取った時", "eff": "**加護**：相手の駒が自分の楔を踏んで消すたびに、相手に400の特殊ダメージ", "piece": "金"}, "楔-銀1": {"name": "ジャッジメント・ボルト", "rar": "S", "trig": "成った時", "eff": "自分の楔を6本まで消し、消した1本につき800の特殊ダメージ", "piece": "銀"}, "楔-銀2": {"name": "トリニティ・ステイク", "rar": "A", "trig": "成った時", "eff": "楔を2本置き、盤上の自分の楔1本につき300の特殊ダメージ（最大1000）", "piece": "銀"}, "楔-歩1": {"name": "アイアン・パイル", "rar": "B", "trig": "取った時", "eff": "楔を1本置く", "piece": "歩"}, "楔-歩3": {"name": "プレリュード", "rar": "B", "trig": "取った時", "eff": "自分の最初の6手番のうちなら、楔を2本置く", "piece": "歩"}, "楔1": {"name": "サンダーステイク・ロード", "rar": "A", "trig": "リーダー", "eff": "自分の最初の6手番は、手番の終わりに、自分の駒の隣の空きマスへ**楔**を2本ランダムに置く。楔は1本につき、自分の手番の終わりに**100の特殊ダメージ**。どちらの駒でも、楔のマスに入るとその楔は消える。", "piece": "玉"}}}, {"key": "kioku", "name": "記憶", "attr": "日", "leader": "記1", "cards": {"記-飛1": {"name": "クロノ・リーディング", "rar": "A", "trig": "成った時", "eff": "追撃1500。さらに盤上の自分の日の駒1枚につき200（最大1000）", "piece": "飛"}, "記-角1": {"name": "ミラー・レコード", "rar": "A", "trig": "成った時", "eff": "記憶を2つ宿す", "piece": "角"}, "記-金1": {"name": "サーガ・テラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒1枚につき150の特殊ダメージ（最大1200）", "piece": "金"}, "記-金2": {"name": "メモリー・トランス", "rar": "A", "trig": "取った時", "eff": "盤上の記憶を1つ、別の自分の駒に移してよい。移したら回復800", "piece": "金"}, "記-銀1": {"name": "ウィスパー・ブレード", "rar": "S", "trig": "成った時", "eff": "**加護**：この駒の攻撃力が、盤上の自分の駒1枚につき+10%（最大+100%）", "piece": "銀"}, "記-銀2": {"name": "クロニクル・キーパー", "rar": "A", "trig": "取った時", "eff": "記憶が2つ以上あれば、回復1500", "piece": "銀"}, "記-歩1": {"name": "サイレント・ヴォイス", "rar": "B", "trig": "成った時", "eff": "記憶を1つ宿す", "piece": "歩"}, "記-歩2": {"name": "ホーリー・チャント", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒が7枚以上あれば、追撃1000", "piece": "歩"}, "記1": {"name": "メモリア・オラクル", "rar": "S", "trig": "リーダー", "eff": "自分の駒が取った時・成った時に、ランダムな自分の駒1枚（玉以外）に**記憶**を宿す（盤上に3つまで）。記憶1つにつき、**受けるダメージ×0.92**（かけ算で重なる）と、自分の手番の終わりに50の特殊ダメージ。記憶の駒が取られると、その記憶は消える。", "piece": "玉"}}}, {"key": "shirei", "name": "指令", "attr": "月", "leader": "令1", "cards": {"令-飛1": {"name": "トータル・コラプス", "rar": "S", "trig": "成った時", "eff": "盤上の相手の駒1枚につき、相手の最大体力の2.5%の特殊ダメージ（最大14%）", "piece": "飛"}, "令-角2": {"name": "ラスト・スタンド", "rar": "A", "trig": "取った時", "eff": "自分の体力が減っているほど大きい追撃（満タンで1500、30%以下で3000）。", "piece": "角"}, "令-金1": {"name": "ヘラルド・ナイト", "rar": "A", "trig": "対局の始めから", "eff": "**加護**：自分が指令を1つ果たすたびに、さらに追撃500（v4.0で800から下げた）。", "piece": "金"}, "令-金2": {"name": "コーリング・ヴォイド", "rar": "A", "trig": "取った時", "eff": "盤上の相手の駒1枚につき100の特殊ダメージ（最大700）", "piece": "金"}, "令-銀2": {"name": "ウォー・ストラテジスト", "rar": "S", "trig": "成った時", "eff": "まだ果たしていない指令を1つ選び、果たしたことにする", "piece": "銀"}, "令-銀3": {"name": "ネクロ・サモナー", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃650、吸収150。この2回も、指令Cの「能力が出た回数」に数える", "piece": "銀"}, "令-歩1": {"name": "エッジ・ストーカー", "rar": "B", "trig": "取った時", "eff": "追撃400", "piece": "歩"}, "令-歩2": {"name": "アンブッシュ", "rar": "A", "trig": "成った時", "eff": "吸収800", "piece": "歩"}, "令1": {"name": "コマンド・ソヴリン", "rar": "A", "trig": "リーダー", "eff": "4つの**指令**を、1局に1回ずつ果たせる。A 端打ち：持ち駒を1筋か5筋に打つ → 追撃1400・吸収700。B 二間取り：飛・角・竜・馬が、ちょうど2マス走って取る → 追撃1400。C 三度の技：自分の駒の能力が3回出る → 追撃2400。D 背水：手番の始めに体力30%以下 → 吸収2400。", "piece": "玉"}}}, {"key": "kaeshi", "name": "返し石", "attr": "月", "leader": "返1", "cards": {"返-飛1": {"name": "マリス・ロア", "rar": "S", "trig": "成った時", "eff": "盤上の自分の月の駒1枚につき600の特殊ダメージ（最大4200）", "piece": "飛"}, "返-角1": {"name": "ストーン・コーラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の月の駒1枚につき200の特殊ダメージ（最大1200）。", "piece": "角"}, "返-金1": {"name": "カース・ウォーデン", "rar": "A", "trig": "取った時", "eff": "隣の味方1枚にも返し石をつける", "piece": "金"}, "返-銀1": {"name": "ヴェンデッタ", "rar": "S", "trig": "取った時", "eff": "**加護**：返し石が返すダメージを75%から100%にする。", "piece": "銀"}, "返-銀2": {"name": "ダーク・アンセム", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃400と吸収400", "piece": "銀"}, "返-歩1": {"name": "スパイト", "rar": "B", "trig": "成った時", "eff": "この駒に返し石をつける", "piece": "歩"}, "返-歩2": {"name": "ファタール・チャーム", "rar": "A", "trig": "成った時", "eff": "追撃1800、吸収900", "piece": "歩"}, "返1": {"name": "リベンジ・リフレクター", "rar": "A", "trig": "リーダー", "eff": "対局開始時、ランダムな自分の駒2枚（玉以外）に**返し石**をつける。自分の駒が取ると、取ったその駒に返し石をつける（盤上に3つまで）。返し石があると、**受けたダメージの75%を相手に返す**。返し石の駒そのものが取られた時は返さず、その石は消える。", "piece": "玉"}}}, {"key": "sokkou", "name": "速攻", "attr": "星", "leader": "速1", "cards": {"速-飛1": {"name": "エクスキューション", "rar": "S", "trig": "取った時", "eff": "この取りの通常攻撃が×1.7〜2.4（自分の体力が減っているほど大きい。満タンで×1.7、0に近いほど×2.4）", "piece": "飛"}, "速-角1": {"name": "ブラッド・イーター", "rar": "A", "trig": "取った時", "eff": "吸収50%（与えた通常攻撃の50%を回復）", "piece": "角"}, "速-金1": {"name": "チャージ・ナイト", "rar": "A", "trig": "取った時", "eff": "鼓舞×1.5", "piece": "金"}, "速-金2": {"name": "ロイヤル・ガード", "rar": "A", "trig": "取った時", "eff": "**近衛**なら、守り1500と鼓舞×1.3", "piece": "金"}, "速-銀1": {"name": "スカーレット・スター", "rar": "S", "trig": "成った時", "eff": "次の自分の手番、星の駒の攻撃力×1.4。そのあと**加護**：自分の体力が減っていれば、星の駒の攻撃力×1.1〜1.3（減っているほど大きい）", "piece": "銀"}, "速-銀2": {"name": "ギャロップ・ストライク", "rar": "A", "trig": "取った時", "eff": "連撃+1", "piece": "銀"}, "速-歩1": {"name": "スラッシャー", "rar": "B", "trig": "取った時", "eff": "追撃500", "piece": "歩"}, "速-歩2": {"name": "ファースト・ランス", "rar": "A", "trig": "取った時", "eff": "玉が最初のマスにいれば、追撃1000", "piece": "歩"}, "速1": {"name": "ソニック・ルーラー", "rar": "A", "trig": "リーダー", "eff": "玉が最初のマスから動いていない間、**星の駒の攻撃力×1.4**。玉で相手の駒を取ると、その通常攻撃の**110%を回復**（捕食）。", "piece": "玉"}}}, {"key": "seiketsu", "name": "星血", "attr": "星", "leader": "血1", "cards": {"血-飛1": {"name": "パワー・ノヴァ", "rar": "A", "trig": "取った時", "eff": "星血を10使って、この取りの通常攻撃×1.5", "piece": "飛"}, "血-角1": {"name": "フレア・コメット", "rar": "A", "trig": "成った時", "eff": "星血を15使って、追撃3000", "piece": "角"}, "血-金1": {"name": "レスト・ハーバー", "rar": "A", "trig": "取った時", "eff": "星血を10と、体力を1000回復（星血は使わない）", "piece": "金"}, "血-金2": {"name": "クリムゾン・ラース", "rar": "A", "trig": "取った時", "eff": "追撃800。さらにこの対局で使った星血1につき+40（最大2000）。星血は使わない", "piece": "金"}, "血-銀1": {"name": "ブラッド・クリスタル", "rar": "S", "trig": "成った時", "eff": "星血を20使って、追撃5000", "piece": "銀"}, "血-銀3": {"name": "スパーク・エッジ", "rar": "A", "trig": "取った時", "eff": "星血を5使って、追撃1200", "piece": "銀"}, "血-歩1": {"name": "スターダスト", "rar": "B", "trig": "取った時", "eff": "星血を5使って、追撃600", "piece": "歩"}, "血-歩2": {"name": "セカンド・ウィンド", "rar": "B", "trig": "成った時", "eff": "星血を10回復", "piece": "歩"}, "血1": {"name": "アストラル・ブラッド", "rar": "S", "trig": "リーダー", "eff": "対局開始時に**星血**を40得る（上限60）。自分の最初の手番の終わりに、相手に**3500の特殊ダメージ**。星血のカードは、星血が足りない時、足りない1につき200のダメージを自分が受ける（効果は出る）。", "piece": "玉"}}}];
 // ENGINE START
 const W = 5, H = 6, MAXPLY = 80;
@@ -321,6 +321,8 @@ const DEF = {
 const ATTR = {}; DATA.forEach(d => { ATTR[d.name] = d.attr; });
 const STEP_GOLD = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [0, 1]];
 const STEPS = { P: [[0, -1]], S: [[-1, -1], [0, -1], [1, -1], [-1, 1], [1, 1]], G: STEP_GOLD, K: [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]] };
+const STEPSET = {};
+for (const k of ['K', 'G', 'S', 'P']) STEPSET[k] = new Set(STEPS[k].map(([a, b]) => a + ',' + b));
 const ORTH = [[0, -1], [0, 1], [-1, 0], [1, 0]];
 const DIAG = [[-1, -1], [1, -1], [-1, 1], [1, 1]];
 const VAL = { P0: 600, S0: 1200, G0: 1300, B0: 1900, R0: 2100, K0: 0, P1: 1200, S1: 1300, B1: 2600, R1: 2900 };
@@ -409,8 +411,35 @@ class Game {
     }
     return out;
   }
-  attacked(s, by) {
-    for (let t = 0; t < W * H; t++) { const pc = this.board[t]; if (pc && pc[0] === by) for (const [to] of this.pieceMoves(t, pc)) if (to === s) return true; }
+  attacked(s, by) {   // s から逆にたどる速い版（結果は全部の駒の動きを作る元のやり方と同じ）
+    const b = this.board, x = X(s), y = Y(s), f = by === 0 ? 1 : -1;
+    if (b[s] && b[s][0] === by) return false;   // 自分の駒がいるマスには動けない（元と同じ扱い）
+    // となりの駒：その駒から s への向きが、その駒の動きに入っているか
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+      if (!dx && !dy) continue;
+      const nx = x + dx, ny = y + dy;
+      if (nx < 0 || nx >= W || ny < 0 || ny >= H) continue;
+      const t = b[ny * W + nx];
+      if (!t || t[0] !== by) continue;
+      const k = t[1], pr = t[2], ox = -dx, oy = -dy;   // 駒から見た s の向き
+      if (k === 'R' || k === 'B') {
+        if (pr && (k === 'R' ? (ox && oy) : (!ox || !oy))) return true;   // 竜の斜め・馬の縦横（1マス）
+        continue;   // 走りは下で調べる
+      }
+      const set = (pr && (k === 'P' || k === 'S')) ? STEPSET.G : STEPSET[k];
+      if (set.has(ox + ',' + oy * f)) return true;
+    }
+    // 走り：縦横は飛（竜）、斜めは角（馬）
+    for (const [dirs, kind] of [[ORTH, 'R'], [DIAG, 'B']]) {
+      for (const [dx, dy] of dirs) {
+        let nx = x + dx, ny = y + dy;
+        while (nx >= 0 && nx < W && ny >= 0 && ny < H) {
+          const t = b[ny * W + nx];
+          if (t) { if (t[0] === by && t[1] === kind) return true; break; }
+          nx += dx; ny += dy;
+        }
+      }
+    }
     return false;
   }
   attackMap(by) {
@@ -802,7 +831,181 @@ class Game {
     return false;
   }
 }
+// ---------- つよいコンピュータ：先読み（αβ探索・反復深化） ----------
+const AI_WIN = 1e9;
+const AI_STOP = { stop: true };
+function aiNow() { return (typeof performance !== 'undefined' ? performance : Date).now(); }
+function aiKey(m) { return (m.s === null ? 'd' + m.k : m.s) + '>' + m.to + (m.prom ? '+' : ''); }
+// 手の並べ替え：よさそうな手から読むと、枝刈りがよく効く
+Game.prototype.aiOrder = function (moves, killers, hist) {
+  const p = this.turn, st = this.ps[p], d = this.deck[p];
+  const sc = moves.map(m => {
+    let v = 0;
+    if (m.s !== null) {
+      const pc = this.board[m.s], cap = this.board[m.to];
+      const act = this.active(pc), trig = act ? this.uinfo[pc[3]].trig : null;
+      if (cap) v += 10000 + VAL[cap[1] + cap[2]] + this.atkOf(pc) * 0.5 - VAL[pc[1] + pc[2]] * 0.1 + (trig === 'T' ? 1500 : 0);
+      if (m.prom) v += 600 + (trig === 'N' ? 1500 : 0);
+      if (cap && d === '指令' && !st.orders.has('B') && (pc[1] === 'R' || pc[1] === 'B') && m.dist === 2) v += 2000;
+    } else {
+      if (d === '指令' && !st.orders.has('A') && (X(m.to) === 0 || X(m.to) === W - 1)) v += 1500;
+    }
+    const k = aiKey(m);
+    if (killers && killers.includes(k)) v += 5000;
+    if (hist) v += Math.min(4000, hist.get(k) || 0);
+    return [v, m];
+  });
+  sc.sort((a, b) => b[0] - a[0]);
+  return sc.map(x => x[1]);
+};
+// 手番側から見た点数
+// 局面の点数（もとの evaluate と同じ形で、重みを変えられる）
+const AIW = { threat: 0.9, mine: 0.25, act: 300, hand: 0.9, wedge: 350, mem: 600, stone: 700, blood: 40, guard: 0.8, insp: 2000, sched: 900, speedK: 1500, king: 120, hp: 1 };
+Game.prototype.aiEval = function (me, w) {
+  if (this.winner !== null) return this.winner === me ? 1e9 : -1e9;
+  const op = 1 - me; let s = 0;
+  for (const [p, sign] of [[me, 1], [op, -1]]) {
+    const st = this.ps[p];
+    s += sign * st.hp * w.hp;
+    for (const pc of this.board) if (pc && pc[0] === p) s += sign * (VAL[pc[1] + pc[2]] + (this.active(pc) ? w.act : 0));
+    for (const [k] of this.hand[p]) s += sign * VAL[k + 0] * w.hand;
+    s += sign * (st.wedges.size * w.wedge + st.memory.size * w.mem + st.stones.size * w.stone + st.blood * w.blood + st.guard * w.guard + (st.inspire - 1) * w.insp);
+    s += sign * st.sched.reduce((a, e) => a + e[0] * w.sched, 0);
+    if (this.deck[p] === '速攻' && !st.king_moved) s += sign * w.speedK;
+  }
+  const attOp = this.attackMap(op), attMe = this.attackMap(me);
+  const chain = CHAIN[Math.min(this.ps[op].chain, 4)];
+  let best = 0;
+  for (const [t, srcs] of attOp) {
+    const tgt = this.board[t]; if (!tgt || tgt[0] !== me || tgt[1] === 'K') continue;
+    for (const src of srcs) {
+      const attacker = this.board[src];
+      const dmg = this.atkOf(attacker) * chain * this.memMult(me);
+      let gain = dmg + VAL[tgt[1] + tgt[2]] * 1.9;
+      if (attMe.has(t)) {
+        const back = Math.min(...attMe.get(t).map(d => this.atkOf(this.board[d]))) * CHAIN[Math.min(this.ps[me].chain, 4)] * this.memMult(op);
+        gain -= VAL[attacker[1] + attacker[2]] * 1.9 + back;
+      }
+      if (gain > best) best = gain;
+      if (dmg >= this.ps[me].hp) best = Math.max(best, 1e6);
+    }
+  }
+  s -= best * w.threat;
+  let mine = 0; const chainMe = CHAIN[Math.min(this.ps[me].chain, 4)];
+  for (const [t, srcs] of attMe) {
+    const tgt = this.board[t]; if (!tgt || tgt[0] !== op || tgt[1] === 'K') continue;
+    for (const src of srcs) mine = Math.max(mine, this.atkOf(this.board[src]) * chainMe * this.memMult(op) + VAL[tgt[1] + tgt[2]] * 1.9);
+  }
+  s += mine * w.mine;
+  for (const [p, sign, att] of [[me, 1, attOp], [op, -1, attMe]]) {
+    const k = this.kingSq(p); if (k === null) continue;
+    let danger = 0;
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+      const nx = X(k) + dx, ny = Y(k) + dy;
+      if (nx >= 0 && nx < W && ny >= 0 && ny < H && att.has(sq(nx, ny))) danger++;
+    }
+    s -= sign * danger * w.king;
+  }
+  return s;
+};
+Game.prototype.aiStatic = function (ctx) { return -this.aiEval(1 - this.turn, ctx.w); };
+Game.prototype.aiTerminal = function (ply) {
+  if (this.winner === -1) return 0;
+  return this.winner === this.turn ? AI_WIN - ply : -(AI_WIN - ply);
+};
+// 取る手だけを読み足す（静止探索）
+Game.prototype.aiQuiesce = function (ctx, alpha, beta, qd, ply) {
+  if (this.winner !== null) return this.aiTerminal(ply);
+  if (++ctx.nodes % 512 === 0 && aiNow() > ctx.deadline) throw AI_STOP;
+  const stand = this.aiStatic(ctx);
+  if (qd <= 0) return stand;
+  if (stand >= beta) return stand;
+  if (stand > alpha) alpha = stand;
+  const caps = this.legalMoves().filter(m => m.s !== null && this.board[m.to] !== null);
+  for (const m of this.aiOrder(caps)) {
+    const g = this.clone(false); g.play(m);
+    const v = -g.aiQuiesce(ctx, -beta, -alpha, qd - 1, ply + 1);
+    if (v >= beta) return v;
+    if (v > alpha) alpha = v;
+  }
+  return alpha;
+};
+Game.prototype.aiNegamax = function (ctx, depth, alpha, beta, ply) {
+  if (this.winner !== null) return this.aiTerminal(ply);
+  if (depth <= 0) return ctx.qdepth > 0 ? this.aiQuiesce(ctx, alpha, beta, ctx.qdepth, ply) : this.aiStatic(ctx);
+  if (++ctx.nodes % 512 === 0 && aiNow() > ctx.deadline) throw AI_STOP;
+  const moves = this.legalMoves();
+  const killers = ctx.killers[ply] || (ctx.killers[ply] = []);
+  let best = -Infinity;
+  for (const m of this.aiOrder(moves, killers, ctx.hist)) {
+    const g = this.clone(false); g.play(m);
+    const v = -g.aiNegamax(ctx, depth - 1, -beta, -alpha, ply + 1);
+    if (v > best) best = v;
+    if (v > alpha) alpha = v;
+    if (alpha >= beta) {
+      const k = aiKey(m);
+      if (!(m.s !== null && this.board[m.to])) { if (!killers.includes(k)) { killers.unshift(k); killers.length = Math.min(killers.length, 2); } }
+      ctx.hist.set(k, (ctx.hist.get(k) || 0) + depth * depth * 10);
+      break;
+    }
+  }
+  return best;
+};
+// 時間（ミリ秒）の中で、できるだけ深く読んで一番よい手を返す
+Game.prototype.aiSearch = function (timeMs, opt = {}) {
+  const ctx = { deadline: aiNow() + timeMs, nodes: 0, killers: [], hist: new Map(), qdepth: opt.qdepth ?? 0, w: Object.assign({}, AIW, opt.w || {}) };
+  const maxDepth = opt.maxDepth || 12;
+  let moves = this.legalMoves();
+  if (moves.length === 1) return { move: moves[0], depth: 0, score: 0, nodes: 0 };
+  // 最初の並べ：1手読みの点数
+  let scored = moves.map(m => { const g = this.clone(false); g.play(m); return [g.winner === this.turn ? AI_WIN : -g.aiStatic(ctx), m]; });
+  scored.sort((a, b) => b[0] - a[0]);
+  if (scored[0][0] >= AI_WIN) return { move: scored[0][1], depth: 1, score: AI_WIN, nodes: 0 };
+  let bestMove = scored[0][1], bestScore = scored[0][0], done = 1;
+  for (let depth = 2; depth <= maxDepth; depth++) {
+    const res = []; let alpha = -Infinity, ok = true;
+    try {
+      for (const [, m] of scored) {
+        const g = this.clone(false); g.play(m);
+        const v = -g.aiNegamax(ctx, depth - 1, -Infinity, -alpha, 1);
+        res.push([v, m]);
+        if (v > alpha) alpha = v;
+      }
+    } catch (e) { if (e !== AI_STOP) throw e; ok = false; }
+    if (res.length) {
+      // 読み切れなかった深さでも、前の一番手を読み終えていれば、その中の一番を使う
+      res.sort((a, b) => b[0] - a[0]);
+      if (ok || res.some(r => r[1] === bestMove)) { bestMove = res[0][1]; bestScore = res[0][0]; }
+    }
+    if (!ok) break;
+    done = depth;
+    const seen = new Set(res.map(r => r[1]));
+    scored = res.concat(scored.filter(s => !seen.has(s[1])));
+    if (Math.abs(bestScore) >= AI_WIN - 100) break;   // 勝ち・負けが読み切れた
+  }
+  return { move: bestMove, depth: done, score: bestScore, nodes: ctx.nodes };
+};
+// 局面を、裏で考える係（Worker）へ送れる形にする・戻す
+Game.prototype.toPlain = function () {
+  return {
+    deck: this.deck, uinfo: this.uinfo, board: this.board, hand: this.hand, turn: this.turn, ply: this.ply,
+    winner: this.winner, reason: this.reason, last: this.last,
+    ps: this.ps.map(d => Object.assign({}, d, { wedges: [...d.wedges], memory: [...d.memory], stones: [...d.stones], orders: [...d.orders] })),
+  };
+};
+Game.fromPlain = function (o) {
+  const g = Object.create(Game.prototype);
+  g.deck = o.deck; g.uinfo = o.uinfo; g.board = o.board.map(pc => pc && pc.slice());
+  g.hand = o.hand.map(h => h.map(x => x.slice()));
+  g.turn = o.turn; g.ply = o.ply; g.winner = o.winner; g.reason = o.reason; g.last = o.last;
+  g.ps = o.ps.map(d => Object.assign({}, d, { wedges: new Set(d.wedges), memory: new Set(d.memory), stones: new Set(d.stones), orders: new Set(d.orders),
+    sched: d.sched.map(e => e.slice()), kago: d.kago.map(e => e.slice()) }));
+  g.ev = null; g.tag = null; g.cur = null;
+  return g;
+};
 // ENGINE END
+</script>
+<script>
 
 // ---------- 画面 ----------
 const DECKINFO = {}; const CARD = {};
@@ -911,7 +1114,7 @@ function renderSetup() {
       }).join('')}</div>
     </div>`;
   $app.innerHTML = `
-  <header class="bar wrap"><h1>異能将棋 体力制<small>v4.1</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
+  <header class="bar wrap"><h1>異能将棋 体力制<small>v4.2</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
   <main class="wrap setup">
     <section>
       <h2>対局のしかた</h2>
@@ -926,7 +1129,9 @@ function renderSetup() {
           <button type="button" id="c-1" aria-pressed="${S.cpuSide === 0}">後手</button></div></div>
         <div><label>強さ</label><div class="seg" role="group" aria-label="強さ">
           <button type="button" id="l-easy" aria-pressed="${S.level === 'easy'}">やさしい</button>
-          <button type="button" id="l-normal" aria-pressed="${S.level === 'normal'}">ふつう</button></div></div>` : ''}
+          <button type="button" id="l-normal" aria-pressed="${S.level === 'normal'}">ふつう</button>
+          <button type="button" id="l-strong" aria-pressed="${S.level === 'strong'}">つよい</button></div></div>` : ''}
+        ${S.mode === 'cpu' && S.level === 'strong' ? '<p class="note" style="margin:0;flex-basis:100%">つよい：数手先まで読んで指します。1手に2秒ほど考えます。</p>' : ''}
         <div><label>演出</label><div class="seg" role="group" aria-label="演出">${['full', 'low', 'off'].map(k => `
           <button type="button" id="fx-${k}" aria-pressed="${S.fx === k}">${FXLBL[k]}</button>`).join('')}</div></div>
       </div>
@@ -941,7 +1146,7 @@ function renderSetup() {
   const on = (id, f) => { const e = document.getElementById(id); if (e) e.onclick = () => { f(); save(); renderSetup(); }; };
   on('m-cpu', () => S.mode = 'cpu'); on('m-pvp', () => S.mode = 'pvp');
   on('c-0', () => S.cpuSide = 1); on('c-1', () => S.cpuSide = 0);
-  on('l-easy', () => S.level = 'easy'); on('l-normal', () => S.level = 'normal');
+  on('l-easy', () => S.level = 'easy'); on('l-normal', () => S.level = 'normal'); on('l-strong', () => S.level = 'strong');
   for (const k of ['full', 'low', 'off']) on('fx-' + k, () => S.fx = k);
   document.querySelectorAll('.deckbtn').forEach(b => b.onclick = () => { S.pick[+b.dataset.p] = b.dataset.n; save(); renderSetup(); });
   document.getElementById('b-rules').onclick = showRules;
@@ -1283,18 +1488,51 @@ function showEnd() {
   const sub = { '詰み': '詰み', '体力': '体力が0に', '手数': `${MAXPLY}手で決着` }[G.reason] || '';
   spawn('fxend' + (S.fx === 'full' ? '' : ' low'), `<div><b class="${t.length > 4 ? 'long' : ''}" style="--c:${c}">${esc(t)}</b><small>${esc(sub)}</small></div>`, {}, 1600);
 }
+// つよい：1手に使う時間（ミリ秒）。時間の中でできるだけ深く読む
+const STRONG_MS = 2000;
+let aiWorker = null, aiSeq = 0;
+function getWorker() {
+  if (aiWorker !== null) return aiWorker || null;
+  try {
+    const src = document.getElementById('engine').textContent +
+      '\nonmessage = e => { const g = Game.fromPlain(e.data.state); const r = g.aiSearch(e.data.ms); postMessage({ id: e.data.id, move: r.move, depth: r.depth }); };';
+    aiWorker = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+  } catch (e) { aiWorker = false; }
+  return aiWorker || null;
+}
+const sameMove = (a, b) => a.s === b.s && a.to === b.to && (a.k || null) === (b.k || null) && (a.u ?? null) === (b.u ?? null) && !!a.prom === !!b.prom;
+function thinkStrong(G) {
+  const local = () => G.clone(false).aiSearch(STRONG_MS).move;
+  const w = getWorker();
+  if (!w) return new Promise(res => setTimeout(() => res(local()), 30));
+  return new Promise(res => {
+    const id = ++aiSeq;
+    const on = e => {
+      if (!e.data || e.data.id !== id) return;
+      w.removeEventListener('message', on);
+      const m = G.legalMoves().find(x => sameMove(x, e.data.move));
+      res(m || local());
+    };
+    w.addEventListener('message', on);
+    w.onerror = () => { w.removeEventListener('message', on); aiWorker = false; res(local()); };
+    w.postMessage({ id, state: G.toPlain(), ms: STRONG_MS });
+  });
+}
 function maybeCpu() {
   const G = S.G;
   if (!G || G.winner !== null || S.mode !== 'cpu' || G.turn !== S.cpuSide) return;
   S.busy = true; renderPlay();
-  // 演出が読めるように、帯が出ている間は少し待つ
+  const ply = G.ply;
+  // 演出が読めるように、帯が出ている間は少し待つ（つよいは、待つ間にもう考え始める）
   const wait = Math.max(450, Math.min(2600, S.fxUntil - performance.now() - 300));
-  setTimeout(() => {
+  const think = S.level === 'strong' ? thinkStrong(G) : null;
+  setTimeout(async () => {
     if (S.G !== G) return;
-    const m = G.choose(S.level === 'easy' ? 1800 : 150);
+    const m = think ? await think : G.choose(S.level === 'easy' ? 1800 : 150);
+    if (S.G !== G || G.ply !== ply || G.winner !== null) return;
     S.busy = false;
     doMove(m);
-  }, wait);
+  }, think ? Math.max(300, wait - STRONG_MS) : wait);
 }
 function undo() {
   if (!S.hist.length || S.busy) return;
