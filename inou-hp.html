@@ -228,16 +228,26 @@ header.bar h1 small { font: 500 12px var(--f-body); color: var(--muted); margin-
 <body>
 <div id="app"></div>
 <script>
-const DATA = [{"key": "kusabi", "name": "楔", "attr": "日", "leader": "楔1", "cards": {"楔-飛1": {"name": "ヘヴンズ・ラウド", "rar": "S", "trig": "成った時", "eff": "盤に自分の楔が1本以上あれば、盤上の自分の日の駒1枚につき、相手の最大体力の3%の特殊ダメージ（最大13%）", "piece": "飛"}, "楔-角1": {"name": "フラッシュ・ピアサー", "rar": "A", "trig": "取った時", "eff": "楔を1本置き、盤上の自分の楔1本につき200の特殊ダメージ（最大1200）", "piece": "角"}, "楔-金1": {"name": "ウェッジ・ガーディアン", "rar": "A", "trig": "取った時", "eff": "自分の楔が1本以上あれば、追撃500、回復500", "piece": "金"}, "楔-金2": {"name": "トレスパス・ペナルティ", "rar": "A", "trig": "取った時", "eff": "**加護**：相手の駒が自分の楔を踏んで消すたびに、相手に400の特殊ダメージ", "piece": "金"}, "楔-銀1": {"name": "ジャッジメント・ボルト", "rar": "S", "trig": "成った時", "eff": "自分の楔を6本まで消し、消した1本につき800の特殊ダメージ", "piece": "銀"}, "楔-銀2": {"name": "トリニティ・ステイク", "rar": "A", "trig": "成った時", "eff": "楔を2本置き、盤上の自分の楔1本につき300の特殊ダメージ（最大1000）", "piece": "銀"}, "楔-歩1": {"name": "アイアン・パイル", "rar": "B", "trig": "取った時", "eff": "楔を1本置く", "piece": "歩"}, "楔-歩3": {"name": "プレリュード", "rar": "B", "trig": "取った時", "eff": "自分の最初の6手番のうちなら、楔を2本置く", "piece": "歩"}, "楔1": {"name": "サンダーステイク・ロード", "rar": "A", "trig": "リーダー", "eff": "自分の最初の6手番は、手番の終わりに、自分の駒の隣の空きマスへ**楔**を2本ランダムに置き、楔1本につき25の特殊ダメージ（最大250）。楔は1本につき、自分の手番の終わりに**100の特殊ダメージ**。どちらの駒でも、楔のマスに入るとその楔は消える。", "piece": "玉"}}}, {"key": "kioku", "name": "記憶", "attr": "日", "leader": "記1", "cards": {"記-飛1": {"name": "クロノ・リーディング", "rar": "A", "trig": "成った時", "eff": "追撃1500。さらに盤上の自分の日の駒1枚につき200（最大1000）", "piece": "飛"}, "記-角1": {"name": "ミラー・レコード", "rar": "A", "trig": "成った時", "eff": "記憶を2つ宿す", "piece": "角"}, "記-金1": {"name": "サーガ・テラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒1枚につき150の特殊ダメージ（最大1200）", "piece": "金"}, "記-金2": {"name": "メモリー・トランス", "rar": "A", "trig": "取った時", "eff": "盤上の記憶を1つ、別の自分の駒に移してよい。移したら回復800", "piece": "金"}, "記-銀1": {"name": "ウィスパー・ブレード", "rar": "S", "trig": "成った時", "eff": "**加護**：この駒の攻撃力が、盤上の自分の駒1枚につき+10%（最大+100%）", "piece": "銀"}, "記-銀2": {"name": "クロニクル・キーパー", "rar": "A", "trig": "取った時", "eff": "記憶が2つ以上あれば、回復1500", "piece": "銀"}, "記-歩1": {"name": "サイレント・ヴォイス", "rar": "B", "trig": "成った時", "eff": "記憶を1つ宿す", "piece": "歩"}, "記-歩2": {"name": "ホーリー・チャント", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒が7枚以上あれば、追撃1000", "piece": "歩"}, "記1": {"name": "メモリア・オラクル", "rar": "S", "trig": "リーダー", "eff": "自分の駒が取った時・成った時に、ランダムな自分の駒1枚（玉以外）に**記憶**を宿す（盤上に3つまで）。記憶1つにつき、**受けるダメージ×0.9**（かけ算で重なる）と、自分の手番の終わりに50の特殊ダメージ。記憶の駒が取られると、その記憶は消える。", "piece": "玉"}}}, {"key": "shirei", "name": "指令", "attr": "月", "leader": "令1", "cards": {"令-飛1": {"name": "トータル・コラプス", "rar": "S", "trig": "成った時", "eff": "盤上の相手の駒1枚につき、相手の最大体力の2.5%の特殊ダメージ（最大14%）", "piece": "飛"}, "令-角2": {"name": "ラスト・スタンド", "rar": "A", "trig": "取った時", "eff": "自分の体力が減っているほど大きい追撃（満タンで1500、30%以下で3000）。", "piece": "角"}, "令-金1": {"name": "ヘラルド・ナイト", "rar": "A", "trig": "対局の始めから", "eff": "**加護**：自分が指令を1つ果たすたびに、さらに追撃800。", "piece": "金"}, "令-金2": {"name": "コーリング・ヴォイド", "rar": "A", "trig": "取った時", "eff": "盤上の相手の駒1枚につき100の特殊ダメージ（最大700）", "piece": "金"}, "令-銀2": {"name": "ウォー・ストラテジスト", "rar": "S", "trig": "成った時", "eff": "まだ果たしていない指令を1つ選び、果たしたことにする", "piece": "銀"}, "令-銀3": {"name": "ネクロ・サモナー", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃650、吸収150。この2回も、指令Cの「能力が出た回数」に数える", "piece": "銀"}, "令-歩1": {"name": "エッジ・ストーカー", "rar": "B", "trig": "取った時", "eff": "追撃400", "piece": "歩"}, "令-歩2": {"name": "アンブッシュ", "rar": "A", "trig": "成った時", "eff": "吸収800", "piece": "歩"}, "令1": {"name": "コマンド・ソヴリン", "rar": "A", "trig": "リーダー", "eff": "4つの**指令**を、1局に1回ずつ果たせる。A 端打ち：持ち駒を1筋か5筋に打つ → 追撃1900・吸収900。B 二間取り：飛・角・竜・馬が、ちょうど2マス走って取る → 追撃1900。C 三度の技：自分の駒の能力が3回出る → 追撃3200。D 背水：手番の始めに体力30%以下 → 吸収3200。", "piece": "玉"}}}, {"key": "kaeshi", "name": "返し石", "attr": "月", "leader": "返1", "cards": {"返-飛1": {"name": "マリス・ロア", "rar": "S", "trig": "成った時", "eff": "盤上の自分の月の駒1枚につき600の特殊ダメージ（最大4200）", "piece": "飛"}, "返-角1": {"name": "ストーン・コーラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の月の駒1枚につき200の特殊ダメージ（最大1200）。", "piece": "角"}, "返-金1": {"name": "カース・ウォーデン", "rar": "A", "trig": "取った時", "eff": "隣の味方1枚にも返し石をつける", "piece": "金"}, "返-銀1": {"name": "ヴェンデッタ", "rar": "S", "trig": "取った時", "eff": "**加護**：返し石が返すダメージを60%から100%にする。", "piece": "銀"}, "返-銀2": {"name": "ダーク・アンセム", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃400と吸収400", "piece": "銀"}, "返-歩1": {"name": "スパイト", "rar": "B", "trig": "成った時", "eff": "この駒に返し石をつける", "piece": "歩"}, "返-歩2": {"name": "ファタール・チャーム", "rar": "A", "trig": "成った時", "eff": "追撃1800、吸収900", "piece": "歩"}, "返1": {"name": "リベンジ・リフレクター", "rar": "A", "trig": "リーダー", "eff": "対局開始時、ランダムな自分の駒2枚（玉以外）に**返し石**をつける。自分の駒が取ると、取ったその駒に返し石をつける（盤上に3つまで）。返し石があると、**受けたダメージの60%を相手に返す**。返し石の駒そのものが取られた時は返さず、その石は消える。", "piece": "玉"}}}, {"key": "sokkou", "name": "速攻", "attr": "星", "leader": "速1", "cards": {"速-飛1": {"name": "エクスキューション", "rar": "S", "trig": "取った時", "eff": "この取りの通常攻撃が×1.7〜2.4（自分の体力が減っているほど大きい。満タンで×1.7、0に近いほど×2.4）", "piece": "飛"}, "速-角1": {"name": "ブラッド・イーター", "rar": "A", "trig": "取った時", "eff": "吸収50%（与えた通常攻撃の50%を回復）", "piece": "角"}, "速-金1": {"name": "チャージ・ナイト", "rar": "A", "trig": "取った時", "eff": "鼓舞×1.5", "piece": "金"}, "速-金2": {"name": "ロイヤル・ガード", "rar": "A", "trig": "取った時", "eff": "**近衛**なら、守り1500と鼓舞×1.3", "piece": "金"}, "速-銀1": {"name": "スカーレット・スター", "rar": "S", "trig": "成った時", "eff": "次の自分の手番、星の駒の攻撃力×1.4。そのあと**加護**：自分の体力が減っていれば、星の駒の攻撃力×1.1〜1.3（減っているほど大きい）", "piece": "銀"}, "速-銀2": {"name": "ギャロップ・ストライク", "rar": "A", "trig": "取った時", "eff": "連撃+1", "piece": "銀"}, "速-歩1": {"name": "スラッシャー", "rar": "B", "trig": "取った時", "eff": "追撃500", "piece": "歩"}, "速-歩2": {"name": "ファースト・ランス", "rar": "A", "trig": "取った時", "eff": "玉が最初のマスにいれば、追撃1000", "piece": "歩"}, "速1": {"name": "ソニック・ルーラー", "rar": "A", "trig": "リーダー", "eff": "玉が最初のマスから動いていない間、**星の駒の攻撃力×1.4**。玉で相手の駒を取ると、その通常攻撃の**110%を回復**（捕食）。", "piece": "玉"}}}, {"key": "seiketsu", "name": "星血", "attr": "星", "leader": "血1", "cards": {"血-飛1": {"name": "パワー・ノヴァ", "rar": "A", "trig": "取った時", "eff": "星血を10使って、この取りの通常攻撃×1.5", "piece": "飛"}, "血-角1": {"name": "フレア・コメット", "rar": "A", "trig": "成った時", "eff": "星血を15使って、追撃3000", "piece": "角"}, "血-金1": {"name": "レスト・ハーバー", "rar": "A", "trig": "取った時", "eff": "星血を10と、体力を1000回復（星血は使わない）", "piece": "金"}, "血-金2": {"name": "クリムゾン・ラース", "rar": "A", "trig": "取った時", "eff": "追撃800。さらにこの対局で使った星血1につき+40（最大2000）。星血は使わない", "piece": "金"}, "血-銀1": {"name": "ブラッド・クリスタル", "rar": "S", "trig": "成った時", "eff": "星血を20使って、追撃5000", "piece": "銀"}, "血-銀3": {"name": "スパーク・エッジ", "rar": "A", "trig": "取った時", "eff": "星血を5使って、追撃1200", "piece": "銀"}, "血-歩1": {"name": "スターダスト", "rar": "B", "trig": "取った時", "eff": "星血を5使って、追撃600", "piece": "歩"}, "血-歩2": {"name": "セカンド・ウィンド", "rar": "B", "trig": "成った時", "eff": "星血を10回復", "piece": "歩"}, "血1": {"name": "アストラル・ブラッド", "rar": "S", "trig": "リーダー", "eff": "対局開始時に**星血**を40得る（上限60）。自分の最初の手番の終わりに、相手に**3500の特殊ダメージ**。星血のカードは、星血が足りない時、足りない1につき200のダメージを自分が受ける（効果は出る）。", "piece": "玉"}}}];
+const DATA = [{"key": "kusabi", "name": "楔", "attr": "日", "leader": "楔1", "cards": {"楔-飛1": {"name": "ヘヴンズ・ラウド", "rar": "S", "trig": "成った時", "eff": "盤に自分の楔が1本以上あれば、盤上の自分の日の駒1枚につき、相手の最大体力の3%の特殊ダメージ（最大13%）", "piece": "飛"}, "楔-角1": {"name": "フラッシュ・ピアサー", "rar": "A", "trig": "取った時", "eff": "楔を1本置き、盤上の自分の楔1本につき200の特殊ダメージ（最大1200）", "piece": "角"}, "楔-金1": {"name": "ウェッジ・ガーディアン", "rar": "A", "trig": "取った時", "eff": "自分の楔が1本以上あれば、追撃500、回復500", "piece": "金"}, "楔-金2": {"name": "トレスパス・ペナルティ", "rar": "A", "trig": "取った時", "eff": "**加護**：相手の駒が自分の楔を踏んで消すたびに、相手に400の特殊ダメージ", "piece": "金"}, "楔-銀1": {"name": "ジャッジメント・ボルト", "rar": "S", "trig": "成った時", "eff": "自分の楔を6本まで消し、消した1本につき800の特殊ダメージ", "piece": "銀"}, "楔-銀2": {"name": "トリニティ・ステイク", "rar": "A", "trig": "成った時", "eff": "楔を2本置き、盤上の自分の楔1本につき300の特殊ダメージ（最大1000）", "piece": "銀"}, "楔-歩1": {"name": "アイアン・パイル", "rar": "B", "trig": "取った時", "eff": "楔を1本置く", "piece": "歩"}, "楔-歩3": {"name": "プレリュード", "rar": "B", "trig": "取った時", "eff": "自分の最初の6手番のうちなら、楔を2本置く", "piece": "歩"}, "楔1": {"name": "サンダーステイク・ロード", "rar": "A", "trig": "リーダー", "eff": "自分の最初の6手番は、手番の終わりに、自分の駒の隣の空きマスへ**楔**を2本ランダムに置く。楔は1本につき、自分の手番の終わりに**100の特殊ダメージ**。どちらの駒でも、楔のマスに入るとその楔は消える。", "piece": "玉"}}}, {"key": "kioku", "name": "記憶", "attr": "日", "leader": "記1", "cards": {"記-飛1": {"name": "クロノ・リーディング", "rar": "A", "trig": "成った時", "eff": "追撃1500。さらに盤上の自分の日の駒1枚につき200（最大1000）", "piece": "飛"}, "記-角1": {"name": "ミラー・レコード", "rar": "A", "trig": "成った時", "eff": "記憶を2つ宿す", "piece": "角"}, "記-金1": {"name": "サーガ・テラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒1枚につき150の特殊ダメージ（最大1200）", "piece": "金"}, "記-金2": {"name": "メモリー・トランス", "rar": "A", "trig": "取った時", "eff": "盤上の記憶を1つ、別の自分の駒に移してよい。移したら回復800", "piece": "金"}, "記-銀1": {"name": "ウィスパー・ブレード", "rar": "S", "trig": "成った時", "eff": "**加護**：この駒の攻撃力が、盤上の自分の駒1枚につき+10%（最大+100%）", "piece": "銀"}, "記-銀2": {"name": "クロニクル・キーパー", "rar": "A", "trig": "取った時", "eff": "記憶が2つ以上あれば、回復1500", "piece": "銀"}, "記-歩1": {"name": "サイレント・ヴォイス", "rar": "B", "trig": "成った時", "eff": "記憶を1つ宿す", "piece": "歩"}, "記-歩2": {"name": "ホーリー・チャント", "rar": "A", "trig": "取った時", "eff": "盤上の自分の日の駒が7枚以上あれば、追撃1000", "piece": "歩"}, "記1": {"name": "メモリア・オラクル", "rar": "S", "trig": "リーダー", "eff": "自分の駒が取った時・成った時に、ランダムな自分の駒1枚（玉以外）に**記憶**を宿す（盤上に3つまで）。記憶1つにつき、**受けるダメージ×0.92**（かけ算で重なる）と、自分の手番の終わりに50の特殊ダメージ。記憶の駒が取られると、その記憶は消える。", "piece": "玉"}}}, {"key": "shirei", "name": "指令", "attr": "月", "leader": "令1", "cards": {"令-飛1": {"name": "トータル・コラプス", "rar": "S", "trig": "成った時", "eff": "盤上の相手の駒1枚につき、相手の最大体力の2.5%の特殊ダメージ（最大14%）", "piece": "飛"}, "令-角2": {"name": "ラスト・スタンド", "rar": "A", "trig": "取った時", "eff": "自分の体力が減っているほど大きい追撃（満タンで1500、30%以下で3000）。", "piece": "角"}, "令-金1": {"name": "ヘラルド・ナイト", "rar": "A", "trig": "対局の始めから", "eff": "**加護**：自分が指令を1つ果たすたびに、さらに追撃500（v4.0で800から下げた）。", "piece": "金"}, "令-金2": {"name": "コーリング・ヴォイド", "rar": "A", "trig": "取った時", "eff": "盤上の相手の駒1枚につき100の特殊ダメージ（最大700）", "piece": "金"}, "令-銀2": {"name": "ウォー・ストラテジスト", "rar": "S", "trig": "成った時", "eff": "まだ果たしていない指令を1つ選び、果たしたことにする", "piece": "銀"}, "令-銀3": {"name": "ネクロ・サモナー", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃650、吸収150。この2回も、指令Cの「能力が出た回数」に数える", "piece": "銀"}, "令-歩1": {"name": "エッジ・ストーカー", "rar": "B", "trig": "取った時", "eff": "追撃400", "piece": "歩"}, "令-歩2": {"name": "アンブッシュ", "rar": "A", "trig": "成った時", "eff": "吸収800", "piece": "歩"}, "令1": {"name": "コマンド・ソヴリン", "rar": "A", "trig": "リーダー", "eff": "4つの**指令**を、1局に1回ずつ果たせる。A 端打ち：持ち駒を1筋か5筋に打つ → 追撃1400・吸収700。B 二間取り：飛・角・竜・馬が、ちょうど2マス走って取る → 追撃1400。C 三度の技：自分の駒の能力が3回出る → 追撃2400。D 背水：手番の始めに体力30%以下 → 吸収2400。", "piece": "玉"}}}, {"key": "kaeshi", "name": "返し石", "attr": "月", "leader": "返1", "cards": {"返-飛1": {"name": "マリス・ロア", "rar": "S", "trig": "成った時", "eff": "盤上の自分の月の駒1枚につき600の特殊ダメージ（最大4200）", "piece": "飛"}, "返-角1": {"name": "ストーン・コーラー", "rar": "A", "trig": "取った時", "eff": "盤上の自分の月の駒1枚につき200の特殊ダメージ（最大1200）。", "piece": "角"}, "返-金1": {"name": "カース・ウォーデン", "rar": "A", "trig": "取った時", "eff": "隣の味方1枚にも返し石をつける", "piece": "金"}, "返-銀1": {"name": "ヴェンデッタ", "rar": "S", "trig": "取った時", "eff": "**加護**：返し石が返すダメージを75%から100%にする。", "piece": "銀"}, "返-銀2": {"name": "ダーク・アンセム", "rar": "A", "trig": "成った時", "eff": "次の自分の手番2回、手番の終わりに追撃400と吸収400", "piece": "銀"}, "返-歩1": {"name": "スパイト", "rar": "B", "trig": "成った時", "eff": "この駒に返し石をつける", "piece": "歩"}, "返-歩2": {"name": "ファタール・チャーム", "rar": "A", "trig": "成った時", "eff": "追撃1800、吸収900", "piece": "歩"}, "返1": {"name": "リベンジ・リフレクター", "rar": "A", "trig": "リーダー", "eff": "対局開始時、ランダムな自分の駒2枚（玉以外）に**返し石**をつける。自分の駒が取ると、取ったその駒に返し石をつける（盤上に3つまで）。返し石があると、**受けたダメージの75%を相手に返す**。返し石の駒そのものが取られた時は返さず、その石は消える。", "piece": "玉"}}}, {"key": "sokkou", "name": "速攻", "attr": "星", "leader": "速1", "cards": {"速-飛1": {"name": "エクスキューション", "rar": "S", "trig": "取った時", "eff": "この取りの通常攻撃が×1.7〜2.4（自分の体力が減っているほど大きい。満タンで×1.7、0に近いほど×2.4）", "piece": "飛"}, "速-角1": {"name": "ブラッド・イーター", "rar": "A", "trig": "取った時", "eff": "吸収50%（与えた通常攻撃の50%を回復）", "piece": "角"}, "速-金1": {"name": "チャージ・ナイト", "rar": "A", "trig": "取った時", "eff": "鼓舞×1.5", "piece": "金"}, "速-金2": {"name": "ロイヤル・ガード", "rar": "A", "trig": "取った時", "eff": "**近衛**なら、守り1500と鼓舞×1.3", "piece": "金"}, "速-銀1": {"name": "スカーレット・スター", "rar": "S", "trig": "成った時", "eff": "次の自分の手番、星の駒の攻撃力×1.4。そのあと**加護**：自分の体力が減っていれば、星の駒の攻撃力×1.1〜1.3（減っているほど大きい）", "piece": "銀"}, "速-銀2": {"name": "ギャロップ・ストライク", "rar": "A", "trig": "取った時", "eff": "連撃+1", "piece": "銀"}, "速-歩1": {"name": "スラッシャー", "rar": "B", "trig": "取った時", "eff": "追撃500", "piece": "歩"}, "速-歩2": {"name": "ファースト・ランス", "rar": "A", "trig": "取った時", "eff": "玉が最初のマスにいれば、追撃1000", "piece": "歩"}, "速1": {"name": "ソニック・ルーラー", "rar": "A", "trig": "リーダー", "eff": "玉が最初のマスから動いていない間、**星の駒の攻撃力×1.4**。玉で相手の駒を取ると、その通常攻撃の**110%を回復**（捕食）。", "piece": "玉"}}}, {"key": "seiketsu", "name": "星血", "attr": "星", "leader": "血1", "cards": {"血-飛1": {"name": "パワー・ノヴァ", "rar": "A", "trig": "取った時", "eff": "星血を10使って、この取りの通常攻撃×1.5", "piece": "飛"}, "血-角1": {"name": "フレア・コメット", "rar": "A", "trig": "成った時", "eff": "星血を15使って、追撃3000", "piece": "角"}, "血-金1": {"name": "レスト・ハーバー", "rar": "A", "trig": "取った時", "eff": "星血を10と、体力を1000回復（星血は使わない）", "piece": "金"}, "血-金2": {"name": "クリムゾン・ラース", "rar": "A", "trig": "取った時", "eff": "追撃800。さらにこの対局で使った星血1につき+40（最大2000）。星血は使わない", "piece": "金"}, "血-銀1": {"name": "ブラッド・クリスタル", "rar": "S", "trig": "成った時", "eff": "星血を20使って、追撃5000", "piece": "銀"}, "血-銀3": {"name": "スパーク・エッジ", "rar": "A", "trig": "取った時", "eff": "星血を5使って、追撃1200", "piece": "銀"}, "血-歩1": {"name": "スターダスト", "rar": "B", "trig": "取った時", "eff": "星血を5使って、追撃600", "piece": "歩"}, "血-歩2": {"name": "セカンド・ウィンド", "rar": "B", "trig": "成った時", "eff": "星血を10回復", "piece": "歩"}, "血1": {"name": "アストラル・ブラッド", "rar": "S", "trig": "リーダー", "eff": "対局開始時に**星血**を40得る（上限60）。自分の最初の手番の終わりに、相手に**3500の特殊ダメージ**。星血のカードは、星血が足りない時、足りない1につき200のダメージを自分が受ける（効果は出る）。", "piece": "玉"}}}];
 // ENGINE START
 const W = 5, H = 6, MAXPLY = 80;
 const BASE = { K: [5000, 2000], R: [3500, 3500], B: [3500, 3500], G: [3000, 2500], S: [3000, 3000], P: [2000, 2500] };
 const ATTRM = { '日': [1.2, 0.85], '月': [1.0, 1.0], '星': [0.85, 1.3] };
 const RARM = { B: 0.9, A: 1.0, S: 1.2 };
 const CHAIN = [1.0, 1.2, 1.44, 1.73, 2.07];
-const GOTE_HP = 0.10;
+// 調整できる数字（バランス）
+const TUNE = {
+  goteHp: 0, senteHp: 0.05,
+  order: { A: [1400, 700], B: [1400, 0], C: [2400, 0], D: [0, 2400] }, herald: 500,
+  speedAtk: 1.4, speedHeal: 1.1,
+  bloodStart: 40, bloodOpen: 3500,
+  wedge: 100, wedgeLead: 0, wedgeLeadMax: 250,
+  memDmg: 50, memCut: 0.92,
+  stoneRate: 0.75, stoneStart: 2, stoneMax: 3,
+  attr: { '日': [1.2, 0.85], '月': [1.0, 1.0], '星': [0.95, 1.3] },
+};
 const r10 = x => Math.floor(x / 10 + 0.5) * 10;
-// デッキ（デッキ案 v3.8 のおすすめ10枚）: [カード, レア, きっかけ] T=取った時 N=成った時 L=リーダー K=対局の始めから
+// デッキ（デッキ案 v4.0 のおすすめ10枚）: [カード, レア, きっかけ] T=取った時 N=成った時 L=リーダー K=対局の始めから
 const DEF = {
   '楔': { K: [['楔1', 'A', 'L']], R: [['楔-飛1', 'S', 'N']], B: [['楔-角1', 'A', 'T']], G: [['楔-金1', 'A', 'T'], ['楔-金2', 'A', 'T']], S: [['楔-銀1', 'S', 'N'], ['楔-銀2', 'A', 'N']], P: [['楔-歩1', 'B', 'T'], ['楔-歩1', 'B', 'T'], ['楔-歩3', 'B', 'T']] },
   '記憶': { K: [['記1', 'S', 'L']], R: [['記-飛1', 'A', 'N']], B: [['記-角1', 'A', 'N']], G: [['記-金1', 'A', 'T'], ['記-金2', 'A', 'T']], S: [['記-銀1', 'S', 'N'], ['記-銀2', 'A', 'T']], P: [['記-歩1', 'B', 'N'], ['記-歩1', 'B', 'N'], ['記-歩2', 'A', 'T']] },
@@ -275,7 +285,7 @@ class Game {
         for (let x = 0; x < W; x++) {
           const k = line[x];
           const [card, rar, trig] = pools[k].shift();
-          const hp = r10(BASE[k][0] * ATTRM[attr][0] * RARM[rar]), atk = r10(BASE[k][1] * ATTRM[attr][1] * RARM[rar]);
+          const hp = r10(BASE[k][0] * TUNE.attr[attr][0] * RARM[rar]), atk = r10(BASE[k][1] * TUNE.attr[attr][1] * RARM[rar]);
           const u = this.uinfo.length;
           this.uinfo.push({ o: p, card, rar, trig, k, hp, atk });
           maxhp[p] += hp;
@@ -283,19 +293,20 @@ class Game {
         }
       }
     }
-    maxhp[1] = r10(maxhp[1] * (1 + GOTE_HP));
+    maxhp[1] = r10(maxhp[1] * (1 + TUNE.goteHp));
+    maxhp[0] = r10(maxhp[0] * (1 + TUNE.senteHp));
     this.ps = [0, 1].map(p => this.newPlayer(p, maxhp[p]));
     for (const p of [0, 1]) {
       if (this.deck[p] !== '返し石') continue;
       const mine = this.board.filter(pc => pc && pc[0] === p && pc[1] !== 'K').map(pc => pc[3]);
-      for (const u of sample(mine, 2)) this.ps[p].stones.add(u);
+      for (const u of sample(mine, TUNE.stoneStart)) this.ps[p].stones.add(u);
     }
     this.turn = 0; this.ply = 0; this.winner = null; this.reason = null; this.tag = null;
     this.ev = []; this.last = null; this.cur = null;
   }
   newPlayer(p, maxhp) {
     return { hp: maxhp, maxhp, chain: 0, guard: 0, inspire: 1.0, wedges: new Set(), memory: new Set(), stones: new Set(),
-      blood: this.deck[p] === '星血' ? 40 : 0, blood_used: 0, orders: new Set(), abil: 0, sched: [], kago: [],
+      blood: this.deck[p] === '星血' ? TUNE.bloodStart : 0, blood_used: 0, orders: new Set(), abil: 0, sched: [], kago: [],
       turns: 0, king_moved: false, buff_turn: -1, ret100: 0, order_now: false };
   }
   clone(keepEv) {
@@ -418,7 +429,7 @@ class Game {
     if (!this.active(pc)) return BASE[k][1];
     let a = this.uinfo[u].atk; const st = this.ps[p];
     if (this.deck[p] === '速攻') {
-      if (!st.king_moved) a *= 1.4;
+      if (!st.king_moved) a *= TUNE.speedAtk;
       if (st.buff_turn === st.turns) a *= 1.4;
       const n = st.kago.filter(q => q[0] === 'aka' && this.uidOn(q[1], p)).length, lost = 1 - st.hp / st.maxhp;
       if (n && lost > 0) a *= Math.pow(1.1 + 0.2 * lost, n);
@@ -426,7 +437,7 @@ class Game {
     if (this.hasKago(p, 'whisper', u)) a *= Math.min(2.0, 1 + 0.1 * this.piecesOn(p));
     return a;
   }
-  memMult(p) { let m = 1; for (const u of this.ps[p].memory) m *= this.hasKago(p, 'veil', u) ? 0.8 : 0.9; return m; }
+  memMult(p) { let m = 1; for (const u of this.ps[p].memory) m *= this.hasKago(p, 'veil', u) ? 0.8 : TUNE.memCut; return m; }
   // ---------- ダメージと回復 ----------
   damage(tgt, amount, normal = false, pierce = false, noReturn = false) {
     const st = this.ps[tgt];
@@ -436,7 +447,7 @@ class Game {
     st.hp -= amount;
     if (this.ev) this.ev.push({ t: 'd', to: tgt, a: amount, tag: this.tag });
     if (st.stones.size && !noReturn && !(normal && pierce)) {
-      const rate = st.ret100 > 0 && this.ps[tgt].kago.some(q => q[0] === 'ret100' && this.uidOn(q[1], tgt)) ? 1.0 : 0.6;
+      const rate = st.ret100 > 0 && this.ps[tgt].kago.some(q => q[0] === 'ret100' && this.uidOn(q[1], tgt)) ? 1.0 : TUNE.stoneRate;
       const back = Math.round(amount * rate);
       const old = this.tag; this.tag = '返し石';
       this.damage(1 - tgt, back, false, false, true);
@@ -474,7 +485,7 @@ class Game {
       st.memory.add(c[Math.floor(Math.random() * c.length)]);
     }
   }
-  addStone(p, u) { const st = this.ps[p]; if (st.stones.size < 3 && !st.stones.has(u)) st.stones.add(u); }
+  addStone(p, u) { const st = this.ps[p]; if (st.stones.size < TUNE.stoneMax && !st.stones.has(u)) st.stones.add(u); }
   useBlood(p, n) {
     const st = this.ps[p], lack = Math.max(0, n - st.blood);
     st.blood = Math.max(0, st.blood - n); st.blood_used += n;
@@ -489,11 +500,11 @@ class Game {
     st.orders.add(o); st.order_now = true;
     const old = this.tag; this.tag = '指令' + o;
     if (this.ev) this.ev.push({ t: 'o', p, o });
-    const V = { A: [1900, 900], B: [1900, 0], C: [3200, 0], D: [0, 3200] }[o];
+    const V = TUNE.order[o];
     if (V[0]) this.special(p, V[0]);
     if (V[1]) this.drain(p, V[1]);
     const n = this.board.filter(pc => pc && pc[0] === p && this.active(pc) && this.uinfo[pc[3]].card === '令-金1').length;
-    if (n) { this.tag = '令-金1'; this.special(p, 800 * n); }
+    if (n) { this.tag = '令-金1'; this.special(p, TUNE.herald * n); }
     this.tag = old;
   }
   // ---------- 1手を指す ----------
@@ -534,7 +545,7 @@ class Game {
         if (card === '血-飛1') { this.tag = card; this.useBlood(p, 10); this.tag = null; mult *= 1.5; }
         const dmg = this.atkOf(mover) * mult;
         this.tag = '通常攻撃'; const dealt = this.damage(op, dmg, true, false, hadStone); this.tag = null;
-        if (mover[1] === 'K' && this.active(mover) && this.deck[p] === '速攻') { this.tag = '玉の捕食'; this.heal(p, dealt * 1.1); this.tag = null; }
+        if (mover[1] === 'K' && this.active(mover) && this.deck[p] === '速攻') { this.tag = '玉の捕食'; this.heal(p, dealt * TUNE.speedHeal); this.tag = null; }
         if (this.deck[p] === '指令' && (mover[1] === 'R' || mover[1] === 'B') && dist === 2) this.fulfill(p, 'B');
         if (this.deck[p] === '記憶') this.addMemory(p, 1);
         if (this.deck[p] === '返し石') this.addStone(p, mover[3]);
@@ -635,11 +646,11 @@ class Game {
   endOfTurn(p) {
     const st = this.ps[p], d = this.deck[p];
     if (d === '楔') {
-      if (st.turns <= 6) { this.placeWedges(p, 2); this.tag = '楔'; this.special(p, Math.min(250, 25 * st.wedges.size)); this.tag = null; }
-      if (st.wedges.size) { this.tag = '楔'; this.special(p, 100 * st.wedges.size); this.tag = null; }
+      if (st.turns <= 6) { this.placeWedges(p, 2); if (TUNE.wedgeLead) { this.tag = '楔'; this.special(p, Math.min(TUNE.wedgeLeadMax, TUNE.wedgeLead * st.wedges.size)); this.tag = null; } }
+      if (st.wedges.size) { this.tag = '楔'; this.special(p, TUNE.wedge * st.wedges.size); this.tag = null; }
     }
-    if (d === '記憶' && st.memory.size) { this.tag = '記憶'; this.special(p, 50 * st.memory.size); this.tag = null; }
-    if (d === '星血' && st.turns === 1) { this.tag = '最初の一撃'; this.special(p, 3500); this.tag = null; }
+    if (d === '記憶' && st.memory.size) { this.tag = '記憶'; this.special(p, TUNE.memDmg * st.memory.size); this.tag = null; }
+    if (d === '星血' && st.turns === 1) { this.tag = '最初の一撃'; this.special(p, TUNE.bloodOpen); this.tag = null; }
     for (const e of st.sched) {
       if (e[0] > 0) {
         if (e[1] === 'necro') { this.tag = '令-銀3'; this.special(p, 650); this.drain(p, 150); this.tag = null; this.countAbility(p); }
@@ -797,7 +808,7 @@ function renderSetup() {
       }).join('')}</div>
     </div>`;
   $app.innerHTML = `
-  <header class="bar wrap"><h1>異能将棋 体力制<small>v3.8</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
+  <header class="bar wrap"><h1>異能将棋 体力制<small>v4.0</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
   <main class="wrap setup">
     <section>
       <h2>対局のしかた</h2>
@@ -818,7 +829,7 @@ function renderSetup() {
     <section class="pick">${deckCol(0)}${deckCol(1)}</section>
     <section class="start">
       <button class="btn primary" id="b-start" type="button">対局を始める</button>
-      <span class="note">後手は体力の合計が1.1倍になります。80手で決着しなければ、体力が多い方の勝ちです。</span>
+      <span class="note">先手は体力の合計が1.05倍になります。80手で決着しなければ、体力が多い方の勝ちです。</span>
     </section>
   </main>`;
   const save = () => { try { localStorage.setItem('inou-hp-setup', JSON.stringify({ mode: S.mode, cpuSide: S.cpuSide, level: S.level, pick: S.pick })); } catch (e) {} };
@@ -1103,12 +1114,12 @@ function showRules() {
     <li>相手側の奥2段に入ると成れます。</li>
     <li>取った駒は、自分の持ち駒では<b>素の駒</b>（能力なし）になります。元の持ち主が取り返すと、元のカードに戻ります。</li></ul>
   <h3>体力とダメージ</h3><ul>
-    <li>10枚の駒の体力の合計が、プレイヤーの体力です。<b>後手は1.1倍</b>になります。</li>
+    <li>10枚の駒の体力の合計が、プレイヤーの体力です。<b>先手は1.05倍</b>になります。</li>
     <li>相手の駒を取ると、<b>取った駒の攻撃力</b>のダメージを与えます（通常攻撃）。</li>
     <li>毎手番続けて取ると<b>連撃</b>で倍率が上がります：1.0 → 1.2 → 1.44 → 1.73 → 2.07。取らない手番があると戻ります。</li>
     <li>能力による<b>特殊ダメージ</b>（追撃など）は、攻撃力や連撃の影響を受けません。</li></ul>
   <h3>属性とカード</h3><ul>
-    <li>日は体力が多く（×1.2）、星は攻撃力が高く（×1.3）、月はその間です。駒の下の色の帯が属性です（帯のない駒は素の駒）。</li>
+    <li>日は体力が多く（×1.2）、星は攻撃力が高く（×1.3。体力は×0.95）、月はその間です。駒の下の色の帯が属性です（帯のない駒は素の駒）。</li>
     <li>能力が出るのは「取った時」「成った時」です。玉はリーダーで、いつも効く能力を持ちます。</li>
     <li>駒の右上の印：<b>記</b>＝記憶、<b>石</b>＝返し石、<b>護</b>＝加護。盤の稲妻は楔です。</li></ul>
   <h3>用語</h3><ul>
