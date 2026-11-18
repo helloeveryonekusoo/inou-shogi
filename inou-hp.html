@@ -860,7 +860,7 @@ Game.prototype.aiOrder = function (moves, killers, hist) {
 };
 // 手番側から見た点数
 // 局面の点数（もとの evaluate と同じ形で、重みを変えられる）
-const AIW = { threat: 0.9, mine: 0.25, act: 300, hand: 0.9, wedge: 350, mem: 600, stone: 700, blood: 40, guard: 0.8, insp: 2000, sched: 900, speedK: 1500, king: 120, hp: 1 };
+const AIW = { threat: 0.9, mine: 0.25, act: 300, hand: 0.9, wedge: 350, mem: 600, stone: 700, blood: 40, guard: 0.8, insp: 2000, sched: 900, speedK: 1500, king: 120, hp: 0.5 };   // hp は対戦テストで 0.5 がいちばん強かった
 Game.prototype.aiEval = function (me, w) {
   if (this.winner !== null) return this.winner === me ? 1e9 : -1e9;
   const op = 1 - me; let s = 0;
@@ -1114,7 +1114,7 @@ function renderSetup() {
       }).join('')}</div>
     </div>`;
   $app.innerHTML = `
-  <header class="bar wrap"><h1>異能将棋 体力制<small>v4.2</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
+  <header class="bar wrap"><h1>異能将棋 体力制<small>v4.3</small></h1><button class="btn" id="b-rules" type="button">遊び方</button></header>
   <main class="wrap setup">
     <section>
       <h2>対局のしかた</h2>
